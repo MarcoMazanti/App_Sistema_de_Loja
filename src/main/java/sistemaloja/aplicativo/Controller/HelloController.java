@@ -2,13 +2,16 @@ package sistemaloja.aplicativo.Controller;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import sistemaloja.aplicativo.Repository.FilialRepository;
 
 public class HelloController {
+    private FilialRepository filialRepository = new FilialRepository();
+
     @FXML
     private Label welcomeText;
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+        welcomeText.setText(filialRepository.getAllFiliais(3).toString());
     }
 }
