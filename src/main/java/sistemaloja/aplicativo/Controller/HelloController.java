@@ -12,6 +12,6 @@ public class HelloController {
 
     @FXML
     protected void onHelloButtonClick() {
-        welcomeText.setText(filialRepository.getAllFiliais(3).toString());
+        welcomeText.setText(filialRepository.getAllFiliais(1).toString());
     }
 }
