@@ -7,6 +7,8 @@ import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 
 import javax.crypto.SecretKey;
+import java.util.ArrayList;
+import java.util.List;
 
 public class FornecedorFactory {
     private final Criptografar criptografar = new Criptografar();
@@ -17,8 +19,41 @@ public class FornecedorFactory {
         this.secretKey = secretKey;
     }
 
+    public <T> Object criptFornecedor(Object objeto) {
+        if (objeto instanceof List<?> lista) {
+            List<FornecedorRecordOne> fornecedorRecordOneList = new ArrayList<>();
+
+            for (Object fornecedor : lista) {
+                fornecedorRecordOneList.add(criptFornecedorRecord((FornecedorRecordOne) fornecedor));
+            }
+
+            return fornecedorRecordOneList;
+        } else {
+            return criptFornecedorRecord((FornecedorRecordOne) objeto);
+        }
+    }
+
+    public <T> List<T> decriptFornecedorList(List<T> objeto) {
+        List<T> fornecedorList = new ArrayList<>();
+
+        for (T fornecedor : objeto) {
+            fornecedorList.add(decriptFornecedor(fornecedor));
+        }
+
+        return fornecedorList;
+    }
+
+    public <T> T decriptFornecedor(T objeto) {
+        return (T) switch (objeto) {
+            case FornecedorRecordOne fornecedorRecordOne -> decriptFornecedorRecordOne(fornecedorRecordOne);
+            case FornecedorRecordTwo fornecedorRecordTwo -> decriptFornecedorRecordTwo(fornecedorRecordTwo);
+            case FornecedorRecordThree fornecedorRecordThree -> decriptFornecedorRecordThree(fornecedorRecordThree);
+            default -> null;
+        };
+    }
+
     // Decript → Cript (REQUEST)
-    public FornecedorRecordOne criptFornecedor(FornecedorRecordOne fornecedorRecordOne) {
+    private FornecedorRecordOne criptFornecedorRecord(FornecedorRecordOne fornecedorRecordOne) {
         String id = (fornecedorRecordOne.id() != null) ? criptografar.criptografar(secretKey, fornecedorRecordOne.id()) : null;
         String nome = criptografar.criptografar(secretKey, fornecedorRecordOne.nome());
         String cpfOrCnpj = criptografar.criptografar(secretKey, fornecedorRecordOne.cpfOrCnpj());
@@ -34,7 +69,7 @@ public class FornecedorFactory {
     }
 
     // Cript → Decript (RESPONSE)
-    public FornecedorRecordOne decriptFornecedorRecordOne(FornecedorRecordOne fornecedorRecordOne) {
+    private FornecedorRecordOne decriptFornecedorRecordOne(FornecedorRecordOne fornecedorRecordOne) {
         String id = (fornecedorRecordOne.id() != null) ? descriptografar.descriptografar(secretKey, fornecedorRecordOne.id()) : null;
         String nome = descriptografar.descriptografar(secretKey, fornecedorRecordOne.nome());
         String cpfOrCnpj = descriptografar.descriptografar(secretKey, fornecedorRecordOne.cpfOrCnpj());
@@ -49,7 +84,7 @@ public class FornecedorFactory {
         return new FornecedorRecordOne(id, nome, cpfOrCnpj, email, telefone, fullAdress, codCountry, codEstado, codCidade, codFornecedor);
     }
 
-    public FornecedorRecordTwo decriptFornecedorRecordTwo(FornecedorRecordTwo fornecedorRecordTwo) {
+    private FornecedorRecordTwo decriptFornecedorRecordTwo(FornecedorRecordTwo fornecedorRecordTwo) {
         String nome = descriptografar.descriptografar(secretKey, fornecedorRecordTwo.nome());
         String cpfOrCnpj = descriptografar.descriptografar(secretKey, fornecedorRecordTwo.cpfOrCnpj());
         String email = descriptografar.descriptografar(secretKey, fornecedorRecordTwo.email());
@@ -60,7 +95,7 @@ public class FornecedorFactory {
         return new FornecedorRecordTwo(nome, cpfOrCnpj, email, telefone, fullAdress, codFornecedor);
     }
 
-    public FornecedorRecordThree decriptFornecedorRecordThree(FornecedorRecordThree fornecedorRecordThree) {
+    private FornecedorRecordThree decriptFornecedorRecordThree(FornecedorRecordThree fornecedorRecordThree) {
         String nome = descriptografar.descriptografar(secretKey, fornecedorRecordThree.nome());
         String email = descriptografar.descriptografar(secretKey, fornecedorRecordThree.email());
         String telefone = (fornecedorRecordThree.telefone() != null) ? descriptografar.descriptografar(secretKey, fornecedorRecordThree.telefone()) : null;

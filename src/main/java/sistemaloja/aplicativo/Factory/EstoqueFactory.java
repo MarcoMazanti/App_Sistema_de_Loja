@@ -7,6 +7,7 @@ import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 
 import javax.crypto.SecretKey;
+import java.util.List;
 
 public class EstoqueFactory {
     private final Criptografar criptografar = new Criptografar();
@@ -17,8 +18,41 @@ public class EstoqueFactory {
         this.secretKey = secretKey;
     }
 
+    public Object criptEstoque(Object objeto) {
+        if (objeto instanceof List<?> lista) {
+            List<EstoqueRecordOne> estoqueRecordOneList = new java.util.ArrayList<>();
+
+            for (Object estoque : lista) {
+                estoqueRecordOneList.add(criptEstoqueRecord((EstoqueRecordOne) estoque));
+            }
+
+            return estoqueRecordOneList;
+        } else {
+            return criptEstoqueRecord((EstoqueRecordOne) objeto);
+        }
+    }
+
+    public <T> List<T> decriptEstoqueList(List<T> objeto) {
+        List<T> estoqueList = new java.util.ArrayList<>();
+
+        for (T estoque : objeto) {
+            estoqueList.add(decriptEstoque(estoque));
+        }
+
+        return estoqueList;
+    }
+
+    public <T> T decriptEstoque(T objeto) {
+        return (T) switch (objeto) {
+            case EstoqueRecordOne estoqueRecordOne -> decriptEstoqueRecordOne(estoqueRecordOne);
+            case EstoqueRecordTwo estoqueRecordTwo -> decriptEstoqueRecordTwo(estoqueRecordTwo);
+            case EstoqueRecordThree estoqueRecordThree -> decriptEstoqueRecordThree(estoqueRecordThree);
+            default -> null;
+        };
+    }
+
     // Decript → Cript (REQUEST)
-    public EstoqueRecordOne criptEstoque(EstoqueRecordOne estoqueRecordOne) {
+    private EstoqueRecordOne criptEstoqueRecord(EstoqueRecordOne estoqueRecordOne) {
         String id = (estoqueRecordOne.id() != null) ? criptografar.criptografar(secretKey, estoqueRecordOne.id()) : null;
         String nome = criptografar.criptografar(secretKey, estoqueRecordOne.nome());
         String idFilial = criptografar.criptografar(secretKey, estoqueRecordOne.idFilial());
@@ -32,7 +66,7 @@ public class EstoqueFactory {
     }
 
     // Cript → Decript (RESPONSE)
-    public EstoqueRecordOne decriptEstoqueRecordOne(EstoqueRecordOne estoqueRecordOne) {
+    private EstoqueRecordOne decriptEstoqueRecordOne(EstoqueRecordOne estoqueRecordOne) {
         String id = (estoqueRecordOne.id() != null) ? descriptografar.descriptografar(secretKey, estoqueRecordOne.id()) : null;
         String nome = descriptografar.descriptografar(secretKey, estoqueRecordOne.nome());
         String idFilial = descriptografar.descriptografar(secretKey, estoqueRecordOne.idFilial());
@@ -45,7 +79,7 @@ public class EstoqueFactory {
         return new EstoqueRecordOne(id, nome, idFilial, idFornecedor, preco, quantidade, descricao, codItem);
     }
 
-    public EstoqueRecordTwo decriptEstoqueRecordTwo(EstoqueRecordTwo estoqueRecordTwo) {
+    private EstoqueRecordTwo decriptEstoqueRecordTwo(EstoqueRecordTwo estoqueRecordTwo) {
         String nome = descriptografar.descriptografar(secretKey, estoqueRecordTwo.nome());
         String idFornecedor = descriptografar.descriptografar(secretKey, estoqueRecordTwo.idFornecedor());
         String preco = descriptografar.descriptografar(secretKey, estoqueRecordTwo.preco());
@@ -56,7 +90,7 @@ public class EstoqueFactory {
         return new EstoqueRecordTwo(nome, idFornecedor, preco, quantidade, descricao, codItem);
     }
 
-    public EstoqueRecordThree decriptEstoqueRecordThree(EstoqueRecordThree estoqueRecordThree) {
+    private EstoqueRecordThree decriptEstoqueRecordThree(EstoqueRecordThree estoqueRecordThree) {
         String nome = descriptografar.descriptografar(secretKey, estoqueRecordThree.nome());
         String preco = descriptografar.descriptografar(secretKey, estoqueRecordThree.preco());
         String descricao = (estoqueRecordThree.descricao() != null) ? descriptografar.descriptografar(secretKey, estoqueRecordThree.descricao()) : null;

@@ -16,8 +16,46 @@ public class PagamentoFactory {
         this.secretKey = secretKey;
     }
 
+    public Object criptPagamento(Object objeto) {
+        if (objeto instanceof List<?> lista) {
+            if (!lista.isEmpty()) {
+                List<Object> pagamentoList = new java.util.ArrayList<>();
+
+                for (Object pagamento : lista) {
+                    pagamentoList.add(criptPagamento(pagamento));
+                }
+
+                return pagamentoList;
+            } else {
+                return null;
+            }
+        } else {
+            return criptPagamentoRecord((PagamentoRecordOne) objeto);
+        }
+    }
+
+    public <T> List<T> decriptPagamentoList(List<T> objeto) {
+        List<T> pagamentoList = new java.util.ArrayList<>();
+
+        for (T pagamento : objeto) {
+            pagamentoList.add(decriptPagamento(pagamento));
+        }
+
+        return pagamentoList;
+    }
+
+    public <T> T decriptPagamento(T objeto) {
+        return (T) switch (objeto) {
+            case PagamentoRecordOne pagamentoRecordOne -> decriptPagamentoRecordOne(pagamentoRecordOne);
+            case PagamentoRecordTwo pagamentoRecordTwo -> decriptPagamentoRecordTwo(pagamentoRecordTwo);
+            case ItemPagamentoRecordOne itemPagamentoRecordOne -> decriptItemPagamentoRecordOne(itemPagamentoRecordOne);
+            case ItemPagamentoRecordTwo itemPagamentoRecordTwo -> decriptItemPagamentoRecordTwo(itemPagamentoRecordTwo);
+            default -> null;
+        };
+    }
+
     // Decript → Cript (REQUEST)
-    public PagamentoRecordOne criptPagamento(PagamentoRecordOne pagamentoRecordOne) {
+    private PagamentoRecordOne criptPagamentoRecord(PagamentoRecordOne pagamentoRecordOne) {
         String id = (pagamentoRecordOne.id() != null) ? criptografar.criptografar(secretKey, pagamentoRecordOne.id()) : null;
         String idCliente = criptografar.criptografar(secretKey, pagamentoRecordOne.idCliente());
         String idFilial = criptografar.criptografar(secretKey, pagamentoRecordOne.idFilial());
@@ -29,7 +67,7 @@ public class PagamentoFactory {
         return new PagamentoRecordOne(id, idCliente, idFilial, precoTotal, precoPago, dataCompra, codPagamento);
     }
 
-    public ItemPagamentoRecordOne criptItemPagamento(ItemPagamentoRecordOne itemPagamentoRecordOne) {
+    private ItemPagamentoRecordOne criptItemPagamentoRecord(ItemPagamentoRecordOne itemPagamentoRecordOne) {
         String id = (itemPagamentoRecordOne.id() != null) ? criptografar.criptografar(secretKey, itemPagamentoRecordOne.id()) : null;
         String idPagamento = (itemPagamentoRecordOne.idPagamento() != null) ? criptografar.criptografar(secretKey, itemPagamentoRecordOne.idPagamento()) : null;
         String idItem = criptografar.criptografar(secretKey, itemPagamentoRecordOne.idItem());
@@ -41,14 +79,14 @@ public class PagamentoFactory {
     }
 
     public PagamentoPayloadRecord<PagamentoRecordOne, ItemPagamentoRecordOne> criptPagamentoPayload(PagamentoPayloadRecord<PagamentoRecordOne, ItemPagamentoRecordOne> pagamentoPayloadRecord) {
-        PagamentoRecordOne pagamentoRecordOne = criptPagamento(pagamentoPayloadRecord.pagamento());
-        List<ItemPagamentoRecordOne> itemPagamentoList = pagamentoPayloadRecord.itemPagamentoList().stream().map(this::criptItemPagamento).toList();
+        PagamentoRecordOne pagamentoRecordOne = criptPagamentoRecord(pagamentoPayloadRecord.pagamento());
+        List<ItemPagamentoRecordOne> itemPagamentoList = pagamentoPayloadRecord.itemPagamentoList().stream().map(this::criptItemPagamentoRecord).toList();
 
         return new PagamentoPayloadRecord<>(pagamentoRecordOne, itemPagamentoList);
     }
 
     // Cript → Decript (RESPONSE)
-    public PagamentoRecordOne decriptPagamentoRecordOne(PagamentoRecordOne pagamentoRecordOne) {
+    private PagamentoRecordOne decriptPagamentoRecordOne(PagamentoRecordOne pagamentoRecordOne) {
         String id = (pagamentoRecordOne.id() != null) ? descriptografar.descriptografar(secretKey, pagamentoRecordOne.id()) : null;
         String idCliente = descriptografar.descriptografar(secretKey, pagamentoRecordOne.idCliente());
         String idFilial = descriptografar.descriptografar(secretKey, pagamentoRecordOne.idFilial());
@@ -60,7 +98,7 @@ public class PagamentoFactory {
         return new PagamentoRecordOne(id, idCliente, idFilial, precoTotal, precoPago, dataCompra, codPagamento);
     }
 
-    public PagamentoRecordTwo decriptPagamentoRecordTwo(PagamentoRecordTwo pagamentoRecordTwo) {
+    private PagamentoRecordTwo decriptPagamentoRecordTwo(PagamentoRecordTwo pagamentoRecordTwo) {
         String idCliente = descriptografar.descriptografar(secretKey, pagamentoRecordTwo.idCliente());
         String precoTotal = (pagamentoRecordTwo.precoTotal() != null) ? descriptografar.descriptografar(secretKey, pagamentoRecordTwo.precoTotal()) : null;
         String precoPago = (pagamentoRecordTwo.precoPago() != null) ? descriptografar.descriptografar(secretKey, pagamentoRecordTwo.precoPago()) : null;
@@ -70,7 +108,7 @@ public class PagamentoFactory {
         return new PagamentoRecordTwo(idCliente, precoTotal, precoPago, dataCompra, codPagamento);
     }
 
-    public ItemPagamentoRecordOne decriptItemPagamentoRecordOne(ItemPagamentoRecordOne itemPagamentoRecordOne) {
+    private ItemPagamentoRecordOne decriptItemPagamentoRecordOne(ItemPagamentoRecordOne itemPagamentoRecordOne) {
         String id = (itemPagamentoRecordOne.id() != null) ? descriptografar.descriptografar(secretKey, itemPagamentoRecordOne.id()) : null;
         String idPagamento = (itemPagamentoRecordOne.idPagamento() != null) ? descriptografar.descriptografar(secretKey, itemPagamentoRecordOne.idPagamento()) : null;
         String idItem = descriptografar.descriptografar(secretKey, itemPagamentoRecordOne.idItem());
@@ -81,7 +119,7 @@ public class PagamentoFactory {
         return new ItemPagamentoRecordOne(id, idPagamento, idItem, nome, quantidade, precoUnit);
     }
 
-    public ItemPagamentoRecordTwo decriptItemPagamentoRecordTwo(ItemPagamentoRecordTwo itemPagamentoRecordTwo) {
+    private ItemPagamentoRecordTwo decriptItemPagamentoRecordTwo(ItemPagamentoRecordTwo itemPagamentoRecordTwo) {
         String idPagamento = (itemPagamentoRecordTwo.idPagamento() != null) ? descriptografar.descriptografar(secretKey, itemPagamentoRecordTwo.idPagamento()) : null;
         String idItem = descriptografar.descriptografar(secretKey, itemPagamentoRecordTwo.idItem());
         String quantidade = descriptografar.descriptografar(secretKey, itemPagamentoRecordTwo.quantidade());

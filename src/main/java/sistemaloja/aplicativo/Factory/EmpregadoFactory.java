@@ -8,6 +8,7 @@ import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 
 import javax.crypto.SecretKey;
+import java.util.List;
 
 public class EmpregadoFactory {
     private final Criptografar criptografar = new Criptografar();
@@ -18,8 +19,53 @@ public class EmpregadoFactory {
         this.secretKey = secretKey;
     }
 
+    public Object criptEmpregado(Object objeto) {
+        if (objeto instanceof List<?> lista) {
+            if (!lista.isEmpty()) {
+                List<Object> empregadoList = new java.util.ArrayList<>();
+
+                for (Object empregado : lista) {
+                    empregadoList.add(criptEmpregadoUnit(empregado));
+                }
+
+                return empregadoList;
+            } else {
+                return null;
+            }
+        } else {
+            return criptEmpregadoUnit(objeto);
+        }
+    }
+
+    private Object criptEmpregadoUnit(Object object) {
+        return switch (object) {
+            case EmpregadoRecordOne empregadoRecordOne -> criptEmpregadoRecord(empregadoRecordOne);
+            case Login login -> criptLogin(login);
+            default -> null;
+        };
+    }
+
+    public <T> List<T> decriptEmpregadoList(List<T> objeto) {
+        List<T> empregadoList = new java.util.ArrayList<>();
+
+        for (T empregado : objeto) {
+            empregadoList.add(descriptEmpregado(empregado));
+        }
+
+        return empregadoList;
+    }
+
+    public <T> T descriptEmpregado(T objeto) {
+        return (T) switch (objeto) {
+            case EmpregadoRecordOne empregadoRecordOne -> decriptEmpregadoRecordOne(empregadoRecordOne);
+            case EmpregadoRecordTwo empregadoRecordTwo -> decriptEmpregadoRecordTwo(empregadoRecordTwo);
+            case EmpregadoRecordThree empregadoRecordThree -> decriptEmpregadoRecordThree(empregadoRecordThree);
+            default -> null;
+        };
+    }
+
     // Decript → Cript (REQUEST)
-    public EmpregadoRecordOne criptEmpregado(EmpregadoRecordOne empregadoRecordOne) {
+    private EmpregadoRecordOne criptEmpregadoRecord(EmpregadoRecordOne empregadoRecordOne) {
         String id = (empregadoRecordOne.id() != null) ? criptografar.criptografar(secretKey, empregadoRecordOne.id()) : null;
         String nome = criptografar.criptografar(secretKey, empregadoRecordOne.nome());
         String cpf = criptografar.criptografar(secretKey, empregadoRecordOne.cpf());
@@ -36,7 +82,7 @@ public class EmpregadoFactory {
         return new EmpregadoRecordOne(id, nome, cpf, senha, email, telefone, salario, cargo, filialId, aniversario, dataAdimissao, codEmpregado);
     }
 
-    public Login criptLogin(Login login) {
+    private Login criptLogin(Login login) {
         String cpf = criptografar.criptografar(secretKey, login.cpf());
         String senha = criptografar.criptografar(secretKey, login.senha());
 
@@ -44,7 +90,7 @@ public class EmpregadoFactory {
     }
 
     // Cript → Decript (RESPONSE)
-    public EmpregadoRecordOne decriptEmpregadoRecordOne(EmpregadoRecordOne empregadoRecordOne) {
+    private EmpregadoRecordOne decriptEmpregadoRecordOne(EmpregadoRecordOne empregadoRecordOne) {
         String id = (empregadoRecordOne.id() != null) ? descriptografar.descriptografar(secretKey, empregadoRecordOne.id()) : null;
         String nome = descriptografar.descriptografar(secretKey, empregadoRecordOne.nome());
         String cpf = descriptografar.descriptografar(secretKey, empregadoRecordOne.cpf());
@@ -61,7 +107,7 @@ public class EmpregadoFactory {
         return new EmpregadoRecordOne(id, nome, cpf, senha, email, telefone, salario, cargo, filialId, aniversario, dataAdimissao, codEmpregado);
     }
 
-    public EmpregadoRecordTwo decriptEmpregadoRecordTwo(EmpregadoRecordTwo empregadoRecordTwo) {
+    private EmpregadoRecordTwo decriptEmpregadoRecordTwo(EmpregadoRecordTwo empregadoRecordTwo) {
         String nome = descriptografar.descriptografar(secretKey, empregadoRecordTwo.nome());
         String cpf = descriptografar.descriptografar(secretKey, empregadoRecordTwo.cpf());
         String email = descriptografar.descriptografar(secretKey, empregadoRecordTwo.email());
@@ -73,7 +119,8 @@ public class EmpregadoFactory {
 
         return new EmpregadoRecordTwo(nome, cpf, email, telefone, salario, cargo, dataAdimissao, codEmpregado);
     }
-    public EmpregadoRecordThree decriptEmpregadoRecordThree(EmpregadoRecordThree empregadoRecordThree) {
+
+    private EmpregadoRecordThree decriptEmpregadoRecordThree(EmpregadoRecordThree empregadoRecordThree) {
         String nome = descriptografar.descriptografar(secretKey, empregadoRecordThree.nome());
         String email = descriptografar.descriptografar(secretKey, empregadoRecordThree.email());
         String telefone = (empregadoRecordThree.telefone() != null) ? descriptografar.descriptografar(secretKey, empregadoRecordThree.telefone()) : null;

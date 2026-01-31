@@ -11,7 +11,9 @@ public class Criptografar {
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeyLimpo);
 
-            return Base64.getEncoder().encodeToString(cipher.doFinal(texto.getBytes(StandardCharsets.UTF_8)));
+            byte[] textoCriptografado = cipher.doFinal(texto.getBytes(StandardCharsets.UTF_8));
+
+            return Base64.getEncoder().encodeToString(textoCriptografado);
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Erro ao criptografar texto.");

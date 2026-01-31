@@ -64,7 +64,6 @@ public class FilialRepository {
                 return List.of();
             }
         } catch (Exception e) {
-            System.err.println("Erro crítico no repositório: " + e.getMessage());
             e.printStackTrace();
             return Collections.emptyList();
         }
