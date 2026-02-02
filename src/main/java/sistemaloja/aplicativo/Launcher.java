@@ -13,10 +13,11 @@ public class Launcher extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Views/hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Views/login-page.fxml"));
         Parent parent = fxmlLoader.load();
-        stage.setScene(new Scene(parent, 300, 275));
-        stage.setTitle("Hello!");
+        stage.setScene(new Scene(parent, 550, 500));
+        stage.setTitle("Gerenciador de Loja");
+        stage.setResizable(false);
         stage.show();
     }
 }

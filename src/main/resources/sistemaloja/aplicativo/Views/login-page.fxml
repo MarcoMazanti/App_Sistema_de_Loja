@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
+<BorderPane stylesheets="@../CSS/generic.css" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sistemaloja.aplicativo.Controller.LoginController">
+    <center>
+        <VBox styleClass="generic-pane" maxWidth="300" maxHeight="400">
+            <VBox>
+                <Label styleClass="simple-text" text="CPF:" />
+                <TextField styleClass="simple-text-field" fx:id="cpfInput" />
+            </VBox>
+            <VBox>
+                <Label styleClass="simple-text" text="Senha:" />
+                <PasswordField styleClass="simple-text-field" fx:id="senhaInput" />
+            </VBox>
+            <Button styleClass="simples-button" onAction="#onLoginButtonClick" text="Login" fx:id="loginButton" />
+        </VBox>
+    </center>
+</BorderPane>
