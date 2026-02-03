@@ -7,6 +7,7 @@ module sistemaloja.aplicativo {
     requires com.fasterxml.jackson.annotation;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
+    requires java.desktop;
 
     opens sistemaloja.aplicativo to javafx.fxml;
     exports sistemaloja.aplicativo;

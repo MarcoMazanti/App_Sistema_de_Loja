@@ -1,13 +1,11 @@
 package sistemaloja.aplicativo.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import javafx.scene.control.Alert;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordThree;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordTwo;
 import sistemaloja.aplicativo.Entity.Empregado.Login;
-import sistemaloja.aplicativo.Entity.Filial.FilialRecordOne;
-import sistemaloja.aplicativo.Entity.Filial.FilialRecordThree;
-import sistemaloja.aplicativo.Entity.Filial.FilialRecordTwo;
 import sistemaloja.aplicativo.Factory.EmpregadoFactory;
 
 import javax.crypto.SecretKey;
@@ -15,8 +13,6 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Collections;
-import java.util.List;
 
 import static sistemaloja.aplicativo.Security.GerarSecretKey.criptSecretKey;
 import static sistemaloja.aplicativo.Security.GerarSecretKey.gerarSecretKey;
@@ -59,6 +55,9 @@ public class EmpregadoRepository {
 
                 return empregadoFactory.descriptEmpregado(empregado);
             } else {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText(response.body().toString());
+                alerta.show();
                 return null;
             }
         } catch (Exception e) {

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sistemaloja.aplicativo.Controller.HomeController"
+            prefHeight="800.0" prefWidth="1500.0">
+    <stylesheets>
+        <URL value="@../CSS/generic.css" />
+        <URL value="@../CSS/HomeStyle.css" />
+    </stylesheets>
+    <top>
+        <fx:include source="Header.fxml" />
+    </top>
+
+    <left>
+        <!-- Vai todos as possíveis opções dos controllers -->
+        <VBox styleClass="generic-pane" fx:id="barraLateral">
+            <VBox>
+                <Label text="• Filial" fx:id="abaFilialLateral" styleClass="listaLateral" />
+                <Separator prefHeight="10" />
+            </VBox>
+            <VBox>
+                <Label text="• Empregado" fx:id="abaEmpregadoLateral" styleClass="listaLateral" />
+                <Separator prefHeight="10" />
+            </VBox>
+            <VBox>
+                <Label text="• Cliente" fx:id="abaClienteLateral" styleClass="listaLateral" />
+                <Separator prefHeight="10" />
+            </VBox>
+            <VBox>
+                <Label text="• Fornecedor" fx:id="abaFornecedorLateral" styleClass="listaLateral" />
+                <Separator prefHeight="10" />
+            </VBox>
+            <VBox>
+                <Label text="• Estoque" fx:id="abaEstoqueLateral" styleClass="listaLateral" />
+                <Separator prefHeight="10" />
+            </VBox>
+            <VBox>
+                <Label text="• Pagamento" fx:id="abaPagamentoLateral" styleClass="listaLateral" />
+                <Separator prefHeight="10" />
+            </VBox>
+        </VBox>
+    </left>
+    <center>
+        <!-- Vai ter a parte principal de cada opção dos controllers -->
+    </center>
+
+    <bottom>
+        <fx:include source="Footer.fxml" />
+    </bottom>
+</BorderPane>
