@@ -17,7 +17,8 @@ public class Launcher extends Application {
         Parent parent = fxmlLoader.load();
         stage.setScene(new Scene(parent, 550, 500));
         stage.setTitle("Gerenciador de Loja");
-        stage.setResizable(false);
+        stage.setResizable(true);
+        stage.setMaximized(true);
         stage.show();
     }
 }

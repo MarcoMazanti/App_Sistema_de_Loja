@@ -4,15 +4,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 import sistemaloja.aplicativo.Entity.Empregado.Login;
 import sistemaloja.aplicativo.Repository.EmpregadoRepository;
-
-import java.util.Objects;
 
 public class LoginController {
     private EmpregadoRepository empregadoRepository = new EmpregadoRepository();
@@ -22,10 +18,13 @@ public class LoginController {
     private TextField cpfInput;
 
     @FXML
-    private TextField senhaInput;
+    private PasswordField senhaInput;
 
     @FXML
     private Button loginButton;
+
+    @FXML
+    private Hyperlink esqueceuSenhaText;
 
     @FXML
     private void onLoginButtonClick() {
@@ -46,9 +45,10 @@ public class LoginController {
                     HomeController homeController = fxmlLoader.getController();
                     homeController.setUsuarioLogado((EmpregadoRecordOne) usuario);
 
-                    Stage stage = (Stage) loginButton.getScene().getWindow();
-                    stage.setScene(new Scene(root));
-                    stage.setResizable(true);
+                    Scene scene = loginButton.getScene();
+                    scene.setRoot(root);
+
+                    Stage stage = (Stage) scene.getWindow();
                     stage.setMaximized(true);
                     stage.show();
                 }
@@ -57,6 +57,26 @@ public class LoginController {
             e.printStackTrace();
             alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setContentText("Erro ao efetuar login!");
+            alerta.show();
+        }
+    }
+
+    @FXML
+    private void onEsqueceuSenhaTextClick() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/ResetPasswordPage.fxml"));
+            Parent root = fxmlLoader.load();
+
+            Scene scene = loginButton.getScene();
+            scene.setRoot(root);
+
+            Stage stage = (Stage) scene.getWindow();
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao direcionar a página para resetar a senha!");
             alerta.show();
         }
     }
