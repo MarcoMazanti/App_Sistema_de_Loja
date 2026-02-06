@@ -11,19 +11,15 @@ public class ResetarSenhaController {
     private Alert alerta;
 
     @FXML
-    private TextField cpfInput;
-
+    public TextField cpfInput;
     @FXML
-    private TextField emailInput;
-
+    public TextField emailInput;
     @FXML
-    private PasswordField novaSenhaInput;
-
+    public PasswordField novaSenhaInput;
     @FXML
-    private Button trocarSenhaButton;
-
+    public Button trocarSenhaButton;
     @FXML
-    private Hyperlink lembrouSenhaText;
+    public Hyperlink lembrouSenhaText;
 
     @FXML
     private void onLembrouSenhaTextClick() {

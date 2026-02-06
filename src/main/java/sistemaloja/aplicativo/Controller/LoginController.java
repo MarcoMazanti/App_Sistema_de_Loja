@@ -15,16 +15,13 @@ public class LoginController {
     private Alert alerta;
 
     @FXML
-    private TextField cpfInput;
-
+    public TextField cpfInput;
     @FXML
-    private PasswordField senhaInput;
-
+    public PasswordField senhaInput;
     @FXML
-    private Button loginButton;
-
+    public Button loginButton;
     @FXML
-    private Hyperlink esqueceuSenhaText;
+    public Hyperlink esqueceuSenhaText;
 
     @FXML
     private void onLoginButtonClick() {

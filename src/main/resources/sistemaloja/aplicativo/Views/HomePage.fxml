@@ -19,18 +19,18 @@
                     <Image url="@../Images/avatar.png" />
                 </ImageView>
                 <VBox>
-                    <Label text="Marco Mazanti" styleClass="brand-title"/> <!-- campos vai falar o primeiro e último nome da pessoa -->
-                    <Label text="Dono" styleClass="brand-subtitle"/>
+                    <Label text="Nome Sobrenome" styleClass="brand-title" fx:id="nomeSobrenomeLabel"/>
+                    <Label text="Cargo" styleClass="brand-subtitle" fx:id="cargoLabel" />
                 </VBox>
             </HBox>
 
             <VBox spacing="6" style="-fx-spacing: 6;">
-                <Button text="Filial" styleClass="nav-item"/>
-                <Button text="Empregado" styleClass="nav-item"/>
-                <Button text="Cliente" styleClass="nav-item"/>
-                <Button text="Fornecedor" styleClass="nav-item"/>
-                <Button text="Estoque" styleClass="nav-item"/>
-                <Button text="Pagamento" styleClass="nav-item"/>
+                <Button text="Filial" styleClass="nav-item" onMouseClicked="#onFilialDisplayClicked" />
+                <Button text="Empregado" styleClass="nav-item" onMouseClicked="#onEmpregadoDisplayClicked" />
+                <Button text="Cliente" styleClass="nav-item" onMouseClicked="#onClienteDisplayClicked" />
+                <Button text="Fornecedor" styleClass="nav-item" onMouseClicked="#onFornecedorDisplayClicked" />
+                <Button text="Estoque" styleClass="nav-item" onMouseClicked="#onEstoqueDisplayClicked" />
+                <Button text="Pagamento" styleClass="nav-item" onMouseClicked="#onPagamentoDisplayClicked" />
             </VBox>
 
             <Region VBox.vgrow="ALWAYS"/>
@@ -49,13 +49,13 @@
             <VBox spacing="28" styleClass="content">
                 <HBox spacing="20" alignment="CENTER_LEFT">
                     <VBox spacing="4">
-                        <Label text="Bem vindo, Marco Mazanti" styleClass="page-title"/> <!-- campos vai falar o primeiro e último nome da pessoa -->
-                        <Label text="Aqui mostra o que está acontecendo com a loja hoje." styleClass="page-subtitle"/>
+                        <Label text="Bem vindo, Nome Sobrenome" styleClass="page-title" fx:id="nomeHeaderLabel" />
+                        <Label text="Aqui mostra o que está acontecendo com a loja." styleClass="page-subtitle"/>
                     </VBox>
 
                     <Region HBox.hgrow="ALWAYS"/>
 
-                    <Button text="➕ Adicionar nova Venda" styleClass="btn-primary"/>
+                    <Button text="➕ Adicionar nova Venda" styleClass="btn-primary" fx:id="novaVendaButton" />
                 </HBox>
 
                 <GridPane hgap="16" vgap="16" styleClass="kpi-grid">
@@ -67,50 +67,51 @@
 
                     <VBox GridPane.columnIndex="0" styleClass="kpi-card">
                         <Label text="Total de Vendas" styleClass="kpi-label"/>
-                        <Label text="R$ 45,231.89" styleClass="kpi-value"/>
+                        <Label text="R$ 45,231.89" styleClass="kpi-value" fx:id="totalVendasLabel" />
                     </VBox>
 
                     <VBox GridPane.columnIndex="1" styleClass="kpi-card">
                         <Label text="Quantidade de Empregados" styleClass="kpi-label"/>
-                        <Label text="14" styleClass="kpi-value"/>
+                        <Label text="14" styleClass="kpi-value" fx:id="totalEmpregadoLabel" />
                     </VBox>
 
                     <VBox GridPane.columnIndex="2" styleClass="kpi-card">
                         <Label text="Total de Clientes" styleClass="kpi-label"/>
-                        <Label text="23" styleClass="kpi-value"/>
+                        <Label text="23" styleClass="kpi-value" fx:id="totalClienteLabel" />
                     </VBox>
                 </GridPane>
 
                 <HBox spacing="20">
                     <VBox HBox.hgrow="ALWAYS" styleClass="panel">
-                        <Label text="Histórico de Receita" styleClass="panel-title"/>
+                        <Label text="Transações Recentes" styleClass="panel-title"/>
                         <Region VBox.vgrow="ALWAYS"/>
-                        <Label text="(espaço reservado para o gráfico)" styleClass="muted"/>
+
+                        <TableView styleClass="table" fx:id="tabelaPagamentosRecentes" >
+                            <columns>
+                                <TableColumn text="Transação ID"/>
+                                <TableColumn text="Cliente"/>
+                                <TableColumn text="Data"/>
+                                <TableColumn text="Preço"/>
+                                <TableColumn text="Status"/>
+                            </columns>
+                        </TableView>
                     </VBox>
 
                     <VBox prefWidth="340" styleClass="panel">
-                        <Label text="⚠ Baixo Estoque" styleClass="panel-title"/>
-                        <VBox spacing="10">
-                            <Label text="Wireless Mouse – 3 restantes" styleClass="alert"/>
-                            <Label text="Office Chair – 5 restantes" styleClass="alert"/>
-                            <Label text="Printer Paper – 10 restantes" styleClass="alert"/>
+                        <Label text="⚠ Baixo Estoque" styleClass="panel-title" style="-fx-padding: 0 0 10 0" />
+                        <VBox spacing="10" fx:id="boxLowItem" >
+                            <HBox styleClass="low-item" >
+                                <Label text="Wireless Mouse – 3 restantes" styleClass="alert"/>
+                            </HBox>
+                            <HBox styleClass="low-item" >
+                                <Label text="Office Chair – 5 restantes" styleClass="alert"/>
+                            </HBox>
+                            <HBox styleClass="low-item" >
+                                <Label text="Printer Paper – 10 restantes" styleClass="alert"/>
+                            </HBox>
                         </VBox>
                     </VBox>
                 </HBox>
-
-                <VBox spacing="12">
-                    <Label text="Transações Recentes" styleClass="panel-title"/>
-
-                    <TableView styleClass="table">
-                        <columns>
-                            <TableColumn text="Transação ID"/>
-                            <TableColumn text="Cliente"/>
-                            <TableColumn text="Data"/>
-                            <TableColumn text="Preço"/>
-                            <TableColumn text="Status"/>
-                        </columns>
-                    </TableView>
-                </VBox>
             </VBox>
         </ScrollPane>
     </center>

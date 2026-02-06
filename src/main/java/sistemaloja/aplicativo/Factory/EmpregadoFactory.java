@@ -1,5 +1,8 @@
 package sistemaloja.aplicativo.Factory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordThree;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordTwo;
@@ -62,6 +65,23 @@ public class EmpregadoFactory {
             case EmpregadoRecordThree empregadoRecordThree -> decriptEmpregadoRecordThree(empregadoRecordThree);
             default -> null;
         };
+    }
+
+    public Class<?> retornaClasse(Object body) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+
+        if (body instanceof String s) json = mapper.readTree(s);
+        else json = mapper.valueToTree(body);
+
+        if (json.isArray() && !json.isEmpty()) json = json.get(0);
+
+        boolean temId  = !json.findPath("id").isMissingNode();
+        boolean temCpf = !json.findPath("cpf").isMissingNode();
+
+        if (temId && temCpf) return EmpregadoRecordOne.class;
+        if (temCpf) return EmpregadoRecordTwo.class;
+        return EmpregadoRecordThree.class;
     }
 
     // Decript → Cript (REQUEST)

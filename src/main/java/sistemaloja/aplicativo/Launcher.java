@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class Launcher extends Application {
+    public static String host = "http://localhost:8081";
+
     public static void main(String[] args) {
         launch(args);
     }
