@@ -21,7 +21,7 @@ public class FornecedorRepository {
     private final ObjectMapper mapper = new ObjectMapper();
     private Alert alerta;
 
-    public List<Object> getAllFornecedores(int modelRecord) {
+    public List<?> getAllFornecedores(int modelRecord) {
         try {
             SecretKey secretKey = gerarSecretKey();
             FornecedorFactory fornecedorFactory = new FornecedorFactory(secretKey);

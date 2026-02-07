@@ -3,10 +3,7 @@ package sistemaloja.aplicativo.Factory;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordThree;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordTwo;
-import sistemaloja.aplicativo.Entity.Empregado.Login;
+import sistemaloja.aplicativo.Entity.Empregado.*;
 import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 
@@ -44,6 +41,7 @@ public class EmpregadoFactory {
         return switch (object) {
             case EmpregadoRecordOne empregadoRecordOne -> criptEmpregadoRecord(empregadoRecordOne);
             case Login login -> criptLogin(login);
+            case TrocarSenha trocarSenha -> criptTrocarSenha(trocarSenha);
             default -> null;
         };
     }
@@ -107,6 +105,14 @@ public class EmpregadoFactory {
         String senha = criptografar.criptografar(secretKey, login.senha());
 
         return new Login(cpf, senha);
+    }
+
+    private TrocarSenha criptTrocarSenha(TrocarSenha trocarSenha) {
+        String cpf = criptografar.criptografar(secretKey, trocarSenha.cpf());
+        String email = criptografar.criptografar(secretKey, trocarSenha.email());
+        String senha = criptografar.criptografar(secretKey, trocarSenha.senha());
+
+        return new TrocarSenha(cpf, email, senha);
     }
 
     // Cript → Decript (RESPONSE)

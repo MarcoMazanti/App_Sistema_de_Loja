@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sistemaloja.aplicativo.Entity.Empregado.TrocarSenha;
+import sistemaloja.aplicativo.Repository.EmpregadoRepository;
 
 public class ResetarSenhaController {
     private Alert alerta;
@@ -42,5 +44,33 @@ public class ResetarSenhaController {
         }
     }
 
-    // adicionar endpoint para resetar a senha
+    @FXML
+    private void onTrocarSenhaButtonClick() {
+        try {
+            EmpregadoRepository empregadoRepository = new EmpregadoRepository();
+
+            TrocarSenha trocarSenha = new TrocarSenha(cpfInput.getText(), emailInput.getText(), novaSenhaInput.getText());
+
+            if (empregadoRepository.trocarSenha(trocarSenha)) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/LoginPage.fxml"));
+                Parent root = fxmlLoader.load();
+
+                Scene scene = trocarSenhaButton.getScene();
+                scene.setRoot(root);
+
+                Stage stage = (Stage) scene.getWindow();
+                stage.setMaximized(true);
+                stage.show();
+            } else {
+                alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText("Erro ao alterar a senha!");
+                alerta.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao direcionar ao Login!");
+            alerta.show();
+        }
+    }
 }

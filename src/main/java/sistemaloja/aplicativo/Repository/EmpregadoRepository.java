@@ -3,6 +3,7 @@ package sistemaloja.aplicativo.Repository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javafx.scene.control.Alert;
 import sistemaloja.aplicativo.Entity.Empregado.Login;
+import sistemaloja.aplicativo.Entity.Empregado.TrocarSenha;
 import sistemaloja.aplicativo.Factory.EmpregadoFactory;
 
 import javax.crypto.SecretKey;
@@ -91,7 +92,7 @@ public class EmpregadoRepository {
         }
     }
 
-    public List<Object> getEmpregadoByFilialId(int filialId, int modelRecord) {
+    public List<?> getEmpregadoByFilialId(int filialId, int modelRecord) {
         try {
             SecretKey secretKey = gerarSecretKey();
             EmpregadoFactory empregadoFactory = new EmpregadoFactory(secretKey);
@@ -123,6 +124,39 @@ public class EmpregadoRepository {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+
+    public boolean trocarSenha(TrocarSenha trocarSenha) {
+        try {
+            SecretKey secretKey = gerarSecretKey();
+            EmpregadoFactory empregadoFactory = new EmpregadoFactory(secretKey);
+
+            String json = mapper.writeValueAsString(empregadoFactory.criptEmpregado(trocarSenha));
+
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(URL + "/trocar_senha"))
+                    .header("Content-Type", "application/json")
+                    .header("ModelRecord", String.valueOf(1))
+                    .header("secretKey", criptSecretKey(secretKey))
+                    .POST(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                return true;
+            } else {
+                alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText(response.body().toString());
+                alerta.show();
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

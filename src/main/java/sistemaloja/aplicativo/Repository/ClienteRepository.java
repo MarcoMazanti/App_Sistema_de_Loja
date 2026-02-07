@@ -21,7 +21,7 @@ public class ClienteRepository {
     private final ObjectMapper mapper = new ObjectMapper();
     private Alert alerta;
 
-    public List<Object> getAllClientes(int modelRecord) {
+    public List<?> getAllClientes(int modelRecord) {
         try {
             SecretKey secretKey = gerarSecretKey();
             ClienteFactory clienteFactory = new ClienteFactory(secretKey);

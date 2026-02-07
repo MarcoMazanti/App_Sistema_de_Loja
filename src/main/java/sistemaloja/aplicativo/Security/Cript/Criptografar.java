@@ -8,6 +8,8 @@ import java.util.Base64;
 public class Criptografar {
     public String criptografar(SecretKey secretKeyLimpo, String texto) {
         try {
+            if (texto == null) texto = "null";
+
             Cipher cipher = Cipher.getInstance("AES");
             cipher.init(Cipher.ENCRYPT_MODE, secretKeyLimpo);
 
