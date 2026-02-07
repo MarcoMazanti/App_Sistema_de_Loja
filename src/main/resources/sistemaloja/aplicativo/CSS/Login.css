@@ -1,0 +1,71 @@
+.root {
+    -fx-font-family: "Manrope", "Segoe UI", sans-serif;
+}
+
+.background {
+    -fx-background-color: #101622;
+}
+
+.card {
+    -fx-background-color: #1c2333;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+    -fx-border-color: #1e293b;
+    -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.35), 20, 0, 0, 10);
+}
+
+.top-bar {
+    -fx-background-color: #135bec;
+    -fx-background-radius: 12 12 0 0;
+}
+
+.icon {
+    -fx-font-size: 50px;
+}
+
+.title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.subtitle {
+    -fx-text-fill: #94a3b8;
+}
+
+.label {
+    -fx-text-fill: #cbd5f5;
+    -fx-font-size: 13px;
+}
+
+.input {
+    -fx-background-color: #101622;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #64748b;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-border-color: #334155;
+    -fx-padding: 10 12;
+}
+
+.input:focused {
+    -fx-border-color: #135bec;
+}
+
+.primary-button {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8;
+    -fx-padding: 10;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #0f4ed1;
+}
+
+.link {
+    -fx-text-fill: #3b82f6;
+    -fx-font-size: 11px;
+}

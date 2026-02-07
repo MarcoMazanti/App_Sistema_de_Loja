@@ -1,5 +1,11 @@
 package sistemaloja.aplicativo.Factory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
+import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordThree;
+import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordTwo;
 import sistemaloja.aplicativo.Entity.Pagamento.*;
 import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
@@ -52,6 +58,30 @@ public class PagamentoFactory {
             case ItemPagamentoRecordTwo itemPagamentoRecordTwo -> decriptItemPagamentoRecordTwo(itemPagamentoRecordTwo);
             default -> null;
         };
+    }
+
+    public Class<?> retornaClasse(Object body) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+
+        if (body instanceof String s) json = mapper.readTree(s);
+        else json = mapper.valueToTree(body);
+
+        if (json.isArray() && !json.isEmpty()) json = json.get(0);
+
+        boolean temId  = !json.findPath("id").isMissingNode();
+        boolean temPagamento = !json.findPath("pagamento").isMissingNode();
+        boolean temItemPagamentoList = !json.findPath("itemPagamentoList").isMissingNode();
+        boolean temIdFilial = !json.findPath("idFilial").isMissingNode();
+        boolean temDataCompra = !json.findPath("dataCompra").isMissingNode();
+        boolean temCodPagamento = !json.findPath("codPagamento").isMissingNode();
+        boolean temIdPagamento = !json.findPath("idPagamento").isMissingNode();
+
+        if (temPagamento && temItemPagamentoList) return PagamentoPayloadRecord.class;
+        if (temId && temIdFilial) return PagamentoRecordOne.class;
+        if (temDataCompra && temCodPagamento) return PagamentoRecordTwo.class;
+        if (temIdPagamento && temId) return ItemPagamentoRecordOne.class;
+        return ItemPagamentoRecordTwo.class;
     }
 
     // Decript → Cript (REQUEST)

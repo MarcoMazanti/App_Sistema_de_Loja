@@ -1,0 +1,135 @@
+.root {
+    -fx-font-family: "Manrope", sans-serif;
+    -fx-background-color: #101622;
+}
+
+.sidebar {
+    -fx-background-color: #111318;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.brand {
+    -fx-alignment: center-left;
+}
+
+.brand-avatar {
+    -fx-font-size: 22px;
+}
+
+.brand-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.brand-subtitle {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 11px;
+}
+
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9da6b9;
+    -fx-alignment: center-left;
+    -fx-padding: 12 16;
+    -fx-background-radius: 12;
+    -fx-pref-width: infinity;
+}
+
+.nav-item:hover {
+    -fx-background-color: #1e2837;
+}
+
+.nav-item.active {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+}
+
+.logout {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ef4444;
+}
+
+.content {
+    -fx-padding: 80 180;
+    -fx-background-color: #101622;
+}
+
+.content-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.page-subtitle {
+    -fx-text-fill: #9da6b9;
+}
+
+.btn-primary {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+.kpi-grid {
+    -fx-pref-width: 100%;
+}
+
+.kpi-card {
+    -fx-background-color: #1e2837;
+    -fx-padding: 20;
+    -fx-background-radius: 16;
+}
+
+.kpi-label {
+    -fx-text-fill: #9da6b9;
+}
+
+.kpi-value {
+    -fx-text-fill: white;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.panel {
+    -fx-background-color: #1e2837;
+    -fx-padding: 20;
+    -fx-background-radius: 16;
+}
+
+.panel-title {
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+}
+
+.low-item {
+    -fx-padding: 20px;
+    -fx-background-color: #19202c;
+    -fx-background-radius: 20px;
+    -fx-alignment: center;
+    -fx-text-alignment: center;
+}
+
+.alert {
+    -fx-text-fill: #fbbf24;
+    -fx-font-size: 14px;
+}
+
+.table {
+    -fx-background-radius: 16;
+}
+
+.muted {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 12px;
+}

@@ -1,9 +1,9 @@
 package sistemaloja.aplicativo.Factory;
 
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordThree;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordTwo;
-import sistemaloja.aplicativo.Entity.Empregado.Login;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import sistemaloja.aplicativo.Entity.Empregado.*;
 import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 
@@ -41,6 +41,7 @@ public class EmpregadoFactory {
         return switch (object) {
             case EmpregadoRecordOne empregadoRecordOne -> criptEmpregadoRecord(empregadoRecordOne);
             case Login login -> criptLogin(login);
+            case TrocarSenha trocarSenha -> criptTrocarSenha(trocarSenha);
             default -> null;
         };
     }
@@ -62,6 +63,23 @@ public class EmpregadoFactory {
             case EmpregadoRecordThree empregadoRecordThree -> decriptEmpregadoRecordThree(empregadoRecordThree);
             default -> null;
         };
+    }
+
+    public Class<?> retornaClasse(Object body) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+
+        if (body instanceof String s) json = mapper.readTree(s);
+        else json = mapper.valueToTree(body);
+
+        if (json.isArray() && !json.isEmpty()) json = json.get(0);
+
+        boolean temId  = !json.findPath("id").isMissingNode();
+        boolean temCpf = !json.findPath("cpf").isMissingNode();
+
+        if (temId && temCpf) return EmpregadoRecordOne.class;
+        if (temCpf) return EmpregadoRecordTwo.class;
+        return EmpregadoRecordThree.class;
     }
 
     // Decript → Cript (REQUEST)
@@ -87,6 +105,14 @@ public class EmpregadoFactory {
         String senha = criptografar.criptografar(secretKey, login.senha());
 
         return new Login(cpf, senha);
+    }
+
+    private TrocarSenha criptTrocarSenha(TrocarSenha trocarSenha) {
+        String cpf = criptografar.criptografar(secretKey, trocarSenha.cpf());
+        String email = criptografar.criptografar(secretKey, trocarSenha.email());
+        String senha = criptografar.criptografar(secretKey, trocarSenha.senha());
+
+        return new TrocarSenha(cpf, email, senha);
     }
 
     // Cript → Decript (RESPONSE)

@@ -1,8 +1,14 @@
 package sistemaloja.aplicativo.Factory;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordThree;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordTwo;
+import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
+import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordThree;
+import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordTwo;
 import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 
@@ -53,6 +59,23 @@ public class ClienteFactory {
             case ClienteRecordThree clienteRecordThree -> decriptClienteRecordThree(clienteRecordThree);
             default -> null;
         };
+    }
+
+    public Class<?> retornaClasse(Object body) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode json;
+
+        if (body instanceof String s) json = mapper.readTree(s);
+        else json = mapper.valueToTree(body);
+
+        if (json.isArray() && !json.isEmpty()) json = json.get(0);
+
+        boolean temId  = !json.findPath("id").isMissingNode();
+        boolean temCpfOrCnpj = !json.findPath("cpfOrCnpj").isMissingNode();
+
+        if (temId) return ClienteRecordOne.class;
+        if (temCpfOrCnpj) return ClienteRecordTwo.class;
+        return ClienteRecordThree.class;
     }
 
     // Decript → Cript (REQUEST)
