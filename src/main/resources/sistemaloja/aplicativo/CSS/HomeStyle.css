@@ -125,11 +125,38 @@
     -fx-font-size: 14px;
 }
 
-.table {
-    -fx-background-radius: 16;
+ListView {
+    -fx-background-color: #19202c;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 16px;
 }
 
-.muted {
-    -fx-text-fill: #9da6b9;
-    -fx-font-size: 12px;
+.list-cell {
+    -fx-background-color: #19202c;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-pref-height: -1;
+}
+
+.list-cell .label {
+    -fx-fill: white;
+}
+
+.list-cell:hover {
+    -fx-background-color: #1e2837;
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: #2b3547;
+}
+
+.pagamento-pago {
+    -fx-fill: #2dce89 !important;
+}
+
+.pagamento-pendente {
+    -fx-fill: #f59e0b !important;
 }

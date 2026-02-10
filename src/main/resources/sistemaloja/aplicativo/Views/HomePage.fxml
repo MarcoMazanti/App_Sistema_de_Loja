@@ -2,13 +2,12 @@
 
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.Button?>
 
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.image.Image?>
+<?import javafx.scene.control.ListView?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="sistemaloja.aplicativo.Controller.HomeController"
             stylesheets="@../CSS/HomeStyle.css" styleClass="root">
@@ -86,7 +85,7 @@
 
                     <VBox HBox.hgrow="ALWAYS" styleClass="panel">
                         <Label text="Transações Recentes" styleClass="panel-title"/>
-
+                        <ListView maxWidth="Infinity" fx:id="listaPagamentos" />
                     </VBox>
 
                     <VBox prefWidth="340" styleClass="panel">
