@@ -4,14 +4,19 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
+import sistemaloja.aplicativo.Entity.Empregado.Login;
 import sistemaloja.aplicativo.Entity.Estoque.EstoqueRecordTwo;
 import sistemaloja.aplicativo.Entity.Filial.FilialRecordThree;
 import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordOne;
@@ -33,6 +38,7 @@ public class HomeController {
     EstoqueRepository estoqueRepository = new EstoqueRepository();
 
     private EmpregadoRecordOne usuarioLogado;
+    private Alert alerta;
 
     @FXML
     public Label nomeHeaderLabel;
@@ -56,6 +62,36 @@ public class HomeController {
     @FXML
     private void sairAplicativo() {
         System.exit(0);
+    }
+
+    @FXML
+    public void onUsuarioDisplayClicked(MouseEvent mouseEvent) {
+        try {
+            if (usuarioLogado != null) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/UserPage.fxml"));
+                Parent root = fxmlLoader.load();
+
+                UserController userController = fxmlLoader.getController();
+                userController.setUsuarioLogado( usuarioLogado);
+
+                Scene scene = nomeHeaderLabel.getScene();
+                scene.setRoot(root);
+
+                Stage stage = (Stage) scene.getWindow();
+                stage.setMaximized(true);
+                stage.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao efetuar a troca de página!");
+            alerta.show();
+        }
+    }
+
+    @FXML
+    public void onHomeDisplayClicked(MouseEvent mouseEvent) {
+
     }
 
     @FXML

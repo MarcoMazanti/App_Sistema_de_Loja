@@ -1,0 +1,100 @@
+.root {
+    -fx-font-family: "Manrope", sans-serif;
+    -fx-background-color: #101622;
+}
+
+.sidebar {
+    -fx-background-color: #111318;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.brand {
+    -fx-alignment: center-left;
+}
+
+.brand-avatar {
+    -fx-font-size: 22px;
+}
+
+.brand-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.brand-subtitle {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 11px;
+}
+
+.content-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.content {
+    -fx-padding: 32;
+}
+
+.page-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: white;
+}
+
+.page-subtitle {
+    -fx-text-fill: #9da6b9;
+}
+
+.card {
+    -fx-background-color: #1e232e;
+    -fx-padding: 24;
+    -fx-background-radius: 12;
+    -fx-border-radius: 12;
+}
+
+.profile-name {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.badge {
+    -fx-background-color: rgba(19,91,236,0.2);
+    -fx-text-fill: #135bec;
+    -fx-padding: 4 8;
+    -fx-background-radius: 6;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+}
+
+.btn-primary {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+    -fx-padding: 8 16;
+}
+
+.btn-secondary {
+    -fx-background-color: #282e39;
+    -fx-text-fill: white;
+}
+
+.section-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+.muted {
+    -fx-text-fill: #9da6b9;
+}
+
+.salary {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.status-active {
+    -fx-text-fill: #22c55e;
+    -fx-font-weight: bold;
+}
