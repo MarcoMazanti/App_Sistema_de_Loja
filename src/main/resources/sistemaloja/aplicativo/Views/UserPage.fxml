@@ -7,10 +7,10 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.shape.Box?>
+<?import javafx.scene.control.Separator?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="sistemaloja.aplicativo.Controller.UserController"
-            stylesheets="@../CSS/Home.css" styleClass="root">
+            stylesheets="@../CSS/User.css" styleClass="root">
     <left>
         <VBox prefWidth="260" styleClass="sidebar">
             <HBox spacing="12" styleClass="brand">
@@ -53,10 +53,10 @@
                     <Label text="Gerencie o seu perfil e visualise o seus dados da contrato." styleClass="page-subtitle"/>
                 </VBox>
 
-                <VBox styleClass="card profile-card">
+                <VBox styleClass="card">
                     <HBox spacing="24" alignment="BOTTOM_LEFT">
 
-                        <ImageView fitWidth="120" fitHeight="120">
+                        <ImageView fitWidth="100" fitHeight="100">
                             <Image url="@../Images/avatar.png" />
                         </ImageView>
 
@@ -73,46 +73,58 @@
                             <Button text="Editar Perfil" styleClass="btn-primary"/>
                         </HBox>
                     </HBox>
-                </VBox>
 
-                <VBox>
-                    <HBox spacing="24" GridPane.columnIndex="0">
-                        <VBox styleClass="card">
+                    <Separator prefHeight="10" style="-fx-padding: 24 0 0 0;" />
+
+                    <HBox spacing="24" style="-fx-alignment: center;">
+                        <VBox styleClass="card" spacing="8">
                             <Label text="Identificação do Contato" styleClass="section-title"/>
                             <VBox>
-                                <VBox>
-                                    <Label text="Nome Completo" styleClass="muted"/>
-                                    <Label text="Nome Completo Empregado" GridPane.columnIndex="1" fx:id="nomeContatoLabel" />
-                                </VBox>
+                                <Label text="Nome Completo" styleClass="muted"/>
+                                <Label text="Nome Completo Empregado" GridPane.columnIndex="1" fx:id="nomeContatoLabel" />
+                            </VBox>
 
-                                <VBox>
-                                    <Label text="CPF" GridPane.rowIndex="1" styleClass="muted"/>
-                                    <Label text="00000000000" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="cpfContatoLabel" />
-                                </VBox>
+                            <VBox>
+                                <Label text="CPF" GridPane.rowIndex="1" styleClass="muted"/>
+                                <Label text="00000000000" GridPane.columnIndex="1" GridPane.rowIndex="1" fx:id="cpfContatoLabel" />
+                            </VBox>
 
-                                <VBox>
-                                    <Label text="Email" GridPane.rowIndex="2" styleClass="muted"/>
-                                    <Label text="nome@example.com" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="emailContatoLabel" />
-                                </VBox>
+                            <VBox>
+                                <Label text="Email" GridPane.rowIndex="2" styleClass="muted"/>
+                                <Label text="nome@example.com" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="emailContatoLabel" />
+                            </VBox>
 
-                                <VBox>
-                                    <Label text="Telefone" GridPane.rowIndex="2" styleClass="muted"/>
-                                    <Label text="55018000000000" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="telefoneContatoLabel" />
-                                </VBox>
+                            <VBox>
+                                <Label text="Telefone" GridPane.rowIndex="2" styleClass="muted"/>
+                                <Label text="55018000000000" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="telefoneContatoLabel" />
+                            </VBox>
 
-                                <VBox>
-                                    <Label text="Aniversário" GridPane.rowIndex="2" styleClass="muted"/>
-                                    <Label text="00/00/0000" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="aniversarioContatoLabel" />
-                                </VBox>
+                            <VBox>
+                                <Label text="Aniversário" GridPane.rowIndex="2" styleClass="muted"/>
+                                <Label text="00/00/0000" GridPane.columnIndex="1" GridPane.rowIndex="2" fx:id="aniversarioContatoLabel" />
                             </VBox>
                         </VBox>
 
-                        <VBox styleClass="card">
+                        <Separator orientation="VERTICAL" style="-fx-padding: 20 75; -fx-pref-height: 95%;" />
+
+                        <VBox styleClass="card" spacing="8">
                             <Label text="Detalhes do Empregado" styleClass="section-title"/>
-                            <Label text="Código do Usuário: EMP-001" fx:id="codEmpregadoLabel" />
-                            <Label text="Código da Filial: FIL-1" fx:id="codFilialLabel" />
-                            <Label text="Salário: R$ 0.00" fx:id="salarioLabel" />
-                            <Label text="Data de Adimissão: 00/00/0000" fx:id="admissaoLabel" />
+                            <VBox>
+                                <Label text="Código do Usuário: " styleClass="muted" />
+                                <Label text="EMP-001" fx:id="codEmpregadoLabel" />
+                            </VBox>
+                            <VBox>
+                                <Label text="ID da Filial: " styleClass="muted" />
+                                <Label text="FIL-1" fx:id="codFilialLabel" />
+                            </VBox>
+                            <VBox>
+                                <Label text="Salário: " styleClass="muted" />
+                                <Label text="R$ 0.00" fx:id="salarioLabel" />
+                            </VBox>
+                            <VBox>
+                                <Label text="Data de Adimissão: " styleClass="muted" />
+                                <Label text="00/00/0000" fx:id="admissaoLabel" />
+                            </VBox>
                         </VBox>
                     </HBox>
                 </VBox>

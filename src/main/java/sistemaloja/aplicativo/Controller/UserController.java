@@ -78,10 +78,10 @@ public class UserController {
     public void setUsuarioLogado(EmpregadoRecordOne usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
 
-        carregarDadosPagia();
+        carregarDadosPagina();
     }
 
-    private void carregarDadosPagia() {
+    private void carregarDadosPagina() {
         if (usuarioLogado != null) {
             String[] nomes = usuarioLogado.nome().split(" ");
             String nomeSobrenome = String.join(" ", nomes[0], nomes[nomes.length - 1]);
@@ -109,10 +109,10 @@ public class UserController {
             emailContatoLabel.setText(usuarioLogado.email());
             telefoneContatoLabel.setText((usuarioLogado.telefone() != null) ? usuarioLogado.telefone() : "-------------");
             aniversarioContatoLabel.setText(dataAniversario);
-            codEmpregadoLabel.setText(String.format("Código do Usuário: %s", usuarioLogado.codEmpregado()));
-            codFilialLabel.setText(String.format("Código da Filial: %s", usuarioLogado.filialId()));
+            codEmpregadoLabel.setText(usuarioLogado.codEmpregado());
+            codFilialLabel.setText(usuarioLogado.filialId());
             salarioLabel.setText(String.format("R$ %.2f", Double.parseDouble(usuarioLogado.salario())));
-            admissaoLabel.setText(String.format("Data de Adimissão: %s", dataAdmissao));
+            admissaoLabel.setText(dataAdmissao);
         } else {
             alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setContentText("Erro ao Obter o Usuário Logado!");

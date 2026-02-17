@@ -81,9 +81,7 @@
                     </VBox>
                 </GridPane>
 
-                <HBox spacing="20" >
-                    <Region VBox.vgrow="ALWAYS" />
-
+                <HBox spacing="20" VBox.vgrow="ALWAYS" >
                     <VBox HBox.hgrow="ALWAYS" styleClass="panel">
                         <Label text="Transações Recentes" styleClass="panel-title"/>
                         <ListView maxWidth="Infinity" fx:id="listaPagamentos" />

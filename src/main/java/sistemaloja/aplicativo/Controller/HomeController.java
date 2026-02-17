@@ -91,7 +91,27 @@ public class HomeController {
 
     @FXML
     public void onHomeDisplayClicked(MouseEvent mouseEvent) {
+        try {
+            if (usuarioLogado != null) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/HomePage.fxml"));
+                Parent root = fxmlLoader.load();
 
+                HomeController homeController = fxmlLoader.getController();
+                homeController.setUsuarioLogado(usuarioLogado);
+
+                Scene scene = nomeSobrenomeLabel.getScene();
+                scene.setRoot(root);
+
+                Stage stage = (Stage) scene.getWindow();
+                stage.setMaximized(true);
+                stage.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao efetuar a troca de página!");
+            alerta.show();
+        }
     }
 
     @FXML
@@ -112,6 +132,28 @@ public class HomeController {
 
     @FXML
     private void onEstoqueDisplayClicked(MouseEvent mouseEvent) {
+        try {
+            if (usuarioLogado != null) {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/OptionsPane.fxml"));
+                Parent root = fxmlLoader.load();
+
+                OptionsController optionsController = fxmlLoader.getController();
+                optionsController.setTipo("ESTOQUE");
+                optionsController.setUsuarioLogado(usuarioLogado);
+
+                Scene scene = nomeSobrenomeLabel.getScene();
+                scene.setRoot(root);
+
+                Stage stage = (Stage) scene.getWindow();
+                stage.setMaximized(true);
+                stage.show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao efetuar a troca de página!");
+            alerta.show();
+        }
     }
 
     @FXML

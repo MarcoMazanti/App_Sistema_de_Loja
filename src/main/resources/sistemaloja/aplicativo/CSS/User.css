@@ -9,6 +9,29 @@
     -fx-spacing: 20;
 }
 
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9da6b9;
+    -fx-alignment: center-left;
+    -fx-padding: 12 16;
+    -fx-background-radius: 12;
+    -fx-pref-width: infinity;
+}
+
+.nav-item:hover {
+    -fx-background-color: #1e2837;
+}
+
+.nav-item.active {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+}
+
+.logout {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ef4444;
+}
+
 .brand {
     -fx-alignment: center-left;
 }
@@ -34,12 +57,13 @@
 }
 
 .content {
-    -fx-padding: 32;
+    -fx-padding: 80 180;
+    -fx-background-color: #101622;
 }
 
 .page-title {
     -fx-font-size: 28px;
-    -fx-font-weight: 800;
+    -fx-font-weight: bold;
     -fx-text-fill: white;
 }
 
@@ -48,14 +72,14 @@
 }
 
 .card {
-    -fx-background-color: #1e232e;
+    -fx-background-color: #1e2837;
     -fx-padding: 24;
     -fx-background-radius: 12;
     -fx-border-radius: 12;
 }
 
 .profile-name {
-    -fx-font-size: 22px;
+    -fx-font-size: 25px;
     -fx-font-weight: bold;
     -fx-text-fill: white;
 }
@@ -65,14 +89,17 @@
     -fx-text-fill: #135bec;
     -fx-padding: 4 8;
     -fx-background-radius: 6;
-    -fx-font-size: 10px;
+    -fx-font-size: 16px;
     -fx-font-weight: bold;
 }
 
 .btn-primary {
     -fx-background-color: #135bec;
     -fx-text-fill: white;
-    -fx-padding: 8 16;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
 }
 
 .btn-secondary {
@@ -83,6 +110,7 @@
 .section-title {
     -fx-font-weight: bold;
     -fx-text-fill: white;
+    -fx-font-size: 16px;
 }
 
 .muted {
