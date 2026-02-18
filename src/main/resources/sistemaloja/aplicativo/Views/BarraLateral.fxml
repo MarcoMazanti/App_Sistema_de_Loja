@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.image.Image?>
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="sistemaloja.aplicativo.Controller.BarraLateralController"
+      stylesheets="@../CSS/BarraLateral.css" prefWidth="260" styleClass="sidebar">
+
+    <HBox spacing="12" styleClass="brand">
+        <ImageView fitWidth="35" fitHeight="35">
+            <Image url="@../Images/avatar.png" />
+        </ImageView>
+        <VBox onMouseClicked="#onUsuarioDisplayClicked" style="-fx-cursor: hand;">
+            <Label text="Nome Sobrenome" styleClass="brand-title" fx:id="nomeSobrenomeLabel"/>
+            <Label text="Cargo" styleClass="brand-subtitle" fx:id="cargoLateralLabel" />
+        </VBox>
+    </HBox>
+
+    <VBox spacing="6" style="-fx-spacing: 6;">
+        <Button text="Home" styleClass="nav-item" onMouseClicked="#onHomeDisplayClicked" />
+        <Button text="Filial" styleClass="nav-item" onMouseClicked="#onFilialDisplayClicked" />
+        <Button text="Empregado" styleClass="nav-item" onMouseClicked="#onEmpregadoDisplayClicked" />
+        <Button text="Cliente" styleClass="nav-item" onMouseClicked="#onClienteDisplayClicked" />
+        <Button text="Fornecedor" styleClass="nav-item" onMouseClicked="#onFornecedorDisplayClicked" />
+        <Button text="Estoque" styleClass="nav-item" onMouseClicked="#onEstoqueDisplayClicked" />
+        <Button text="Pagamento" styleClass="nav-item" onMouseClicked="#onPagamentoDisplayClicked" />
+    </VBox>
+
+    <Region VBox.vgrow="ALWAYS"/>
+
+    <HBox style="-fx-cursor: hand" >
+        <ImageView fitWidth="25" fitHeight="25" >
+            <Image url="@../Images/exit.png" />
+        </ImageView>
+        <Button text="Logout" styleClass="logout" onMouseClicked="#sairAplicativo"/>
+    </HBox>
+</VBox>

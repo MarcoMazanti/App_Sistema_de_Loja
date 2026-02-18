@@ -1,0 +1,43 @@
+.sidebar {
+    -fx-background-color: #111318;
+    -fx-padding: 20;
+    -fx-spacing: 20;
+}
+
+.brand {
+    -fx-alignment: center-left;
+}
+
+.brand-title {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.brand-subtitle {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 11px;
+}
+
+.nav-item {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9da6b9;
+    -fx-alignment: center-left;
+    -fx-padding: 12 16;
+    -fx-background-radius: 12;
+    -fx-pref-width: infinity;
+}
+
+.nav-item:hover {
+    -fx-background-color: #1e2837;
+    -fx-cursor: hand;
+}
+
+.nav-item.active {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+}
+
+.logout {
+    -fx-background-color: transparent;
+    -fx-text-fill: #ef4444;
+}

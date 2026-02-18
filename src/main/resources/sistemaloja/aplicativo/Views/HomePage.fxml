@@ -5,43 +5,12 @@
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Button?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <?import javafx.scene.control.ListView?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="sistemaloja.aplicativo.Controller.HomeController"
             stylesheets="@../CSS/Home.css" styleClass="root">
     <left>
-        <VBox prefWidth="260" styleClass="sidebar">
-            <HBox spacing="12" styleClass="brand" style="-fx-cursor: hand;" onMouseClicked="#onUsuarioDisplayClicked">
-                <ImageView fitWidth="35" fitHeight="35">
-                    <Image url="@../Images/avatar.png" />
-                </ImageView>
-                <VBox>
-                    <Label text="Nome Sobrenome" styleClass="brand-title" fx:id="nomeSobrenomeLabel"/>
-                    <Label text="Cargo" styleClass="brand-subtitle" fx:id="cargoLabel" />
-                </VBox>
-            </HBox>
-
-            <VBox spacing="6" style="-fx-spacing: 6;">
-                <Button text="Home" styleClass="nav-item" onMouseClicked="#onHomeDisplayClicked" />
-                <Button text="Filial" styleClass="nav-item" onMouseClicked="#onFilialDisplayClicked" />
-                <Button text="Empregado" styleClass="nav-item" onMouseClicked="#onEmpregadoDisplayClicked" />
-                <Button text="Cliente" styleClass="nav-item" onMouseClicked="#onClienteDisplayClicked" />
-                <Button text="Fornecedor" styleClass="nav-item" onMouseClicked="#onFornecedorDisplayClicked" />
-                <Button text="Estoque" styleClass="nav-item" onMouseClicked="#onEstoqueDisplayClicked" />
-                <Button text="Pagamento" styleClass="nav-item" onMouseClicked="#onPagamentoDisplayClicked" />
-            </VBox>
-
-            <Region VBox.vgrow="ALWAYS"/>
-
-            <HBox onMouseClicked="#sairAplicativo" style="-fx-cursor: hand" >
-                <ImageView fitWidth="25" fitHeight="25">
-                    <Image url="@../Images/exit.png" />
-                </ImageView>
-                <Button text="Logout" styleClass="logout"/>
-            </HBox>
-        </VBox>
+        <fx:include fx:id="barraLateral" source="BarraLateral.fxml" />
     </left>
 
     <center>

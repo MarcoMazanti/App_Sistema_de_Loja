@@ -12,36 +12,7 @@
             fx:controller="sistemaloja.aplicativo.Controller.UserController"
             stylesheets="@../CSS/User.css" styleClass="root">
     <left>
-        <VBox prefWidth="260" styleClass="sidebar">
-            <HBox spacing="12" styleClass="brand">
-                <ImageView fitWidth="35" fitHeight="35">
-                    <Image url="@../Images/avatar.png" />
-                </ImageView>
-                <VBox>
-                    <Label text="Nome Sobrenome" styleClass="brand-title" fx:id="nomeSobrenomeLabel"/>
-                    <Label text="Cargo" styleClass="brand-subtitle" fx:id="cargoLateralLabel" />
-                </VBox>
-            </HBox>
-
-            <VBox spacing="6" style="-fx-spacing: 6;">
-                <Button text="Home" styleClass="nav-item" onMouseClicked="#onHomeDisplayClicked" />
-                <Button text="Filial" styleClass="nav-item" />
-                <Button text="Empregado" styleClass="nav-item" />
-                <Button text="Cliente" styleClass="nav-item" />
-                <Button text="Fornecedor" styleClass="nav-item" />
-                <Button text="Estoque" styleClass="nav-item" />
-                <Button text="Pagamento" styleClass="nav-item" />
-            </VBox>
-
-            <Region VBox.vgrow="ALWAYS"/>
-
-            <HBox style="-fx-cursor: hand" >
-                <ImageView fitWidth="25" fitHeight="25" >
-                    <Image url="@../Images/exit.png" />
-                </ImageView>
-                <Button text="Logout" styleClass="logout" onMouseClicked="#sairAplicativo"/>
-            </HBox>
-        </VBox>
+        <fx:include fx:id="barraLateral" source="BarraLateral.fxml" />
     </left>
 
     <center>

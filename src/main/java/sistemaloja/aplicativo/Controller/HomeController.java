@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -16,7 +15,6 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
-import sistemaloja.aplicativo.Entity.Empregado.Login;
 import sistemaloja.aplicativo.Entity.Estoque.EstoqueRecordTwo;
 import sistemaloja.aplicativo.Entity.Filial.FilialRecordThree;
 import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordOne;
@@ -43,10 +41,6 @@ public class HomeController {
     @FXML
     public Label nomeHeaderLabel;
     @FXML
-    public Label nomeSobrenomeLabel;
-    @FXML
-    public Label cargoLabel;
-    @FXML
     public Button novaVendaButton;
     @FXML
     public Label totalVendasLabel;
@@ -60,108 +54,11 @@ public class HomeController {
     public ListView<String> listaPagamentos;
 
     @FXML
-    private void sairAplicativo() {
-        System.exit(0);
-    }
-
-    @FXML
-    public void onUsuarioDisplayClicked(MouseEvent mouseEvent) {
-        try {
-            if (usuarioLogado != null) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/UserPage.fxml"));
-                Parent root = fxmlLoader.load();
-
-                UserController userController = fxmlLoader.getController();
-                userController.setUsuarioLogado( usuarioLogado);
-
-                Scene scene = nomeHeaderLabel.getScene();
-                scene.setRoot(root);
-
-                Stage stage = (Stage) scene.getWindow();
-                stage.setMaximized(true);
-                stage.show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setContentText("Erro ao efetuar a troca de página!");
-            alerta.show();
-        }
-    }
-
-    @FXML
-    public void onHomeDisplayClicked(MouseEvent mouseEvent) {
-        try {
-            if (usuarioLogado != null) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/HomePage.fxml"));
-                Parent root = fxmlLoader.load();
-
-                HomeController homeController = fxmlLoader.getController();
-                homeController.setUsuarioLogado(usuarioLogado);
-
-                Scene scene = nomeSobrenomeLabel.getScene();
-                scene.setRoot(root);
-
-                Stage stage = (Stage) scene.getWindow();
-                stage.setMaximized(true);
-                stage.show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setContentText("Erro ao efetuar a troca de página!");
-            alerta.show();
-        }
-    }
-
-    @FXML
-    private void onFilialDisplayClicked(MouseEvent mouseEvent) {
-    }
-
-    @FXML
-    private void onEmpregadoDisplayClicked(MouseEvent mouseEvent) {
-    }
-
-    @FXML
-    private void onClienteDisplayClicked(MouseEvent mouseEvent) {
-    }
-
-    @FXML
-    private void onFornecedorDisplayClicked(MouseEvent mouseEvent) {
-    }
-
-    @FXML
-    private void onEstoqueDisplayClicked(MouseEvent mouseEvent) {
-        try {
-            if (usuarioLogado != null) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/OptionsPane.fxml"));
-                Parent root = fxmlLoader.load();
-
-                OptionsController optionsController = fxmlLoader.getController();
-                optionsController.setTipo("ESTOQUE");
-                optionsController.setUsuarioLogado(usuarioLogado);
-
-                Scene scene = nomeSobrenomeLabel.getScene();
-                scene.setRoot(root);
-
-                Stage stage = (Stage) scene.getWindow();
-                stage.setMaximized(true);
-                stage.show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setContentText("Erro ao efetuar a troca de página!");
-            alerta.show();
-        }
-    }
-
-    @FXML
-    private void onPagamentoDisplayClicked(MouseEvent mouseEvent) {
-    }
+    private BarraLateralController barraLateralController;
 
     public void setUsuarioLogado(EmpregadoRecordOne usuarioLogado) {
         this.usuarioLogado = usuarioLogado;
+        barraLateralController.setUsuarioLogado(usuarioLogado);
 
         carregarDashboardFinanceiro();
         carregarItensBaixoEstoque();
@@ -235,8 +132,6 @@ public class HomeController {
                     totalEmpregadoLabel.setText(String.valueOf(quantEmpregados));
                     totalClienteLabel.setText(String.valueOf(clientes.size()));
                     nomeHeaderLabel.setText("Bem vindo(a) " + nomeSobrenome);
-                    nomeSobrenomeLabel.setText(nomeSobrenome);
-                    cargoLabel.setText(usuarioLogado.cargo());
                 });
             } catch (Exception e) { e.printStackTrace(); }
         }).start();
