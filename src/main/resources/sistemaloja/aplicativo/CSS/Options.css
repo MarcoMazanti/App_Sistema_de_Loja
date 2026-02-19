@@ -1,0 +1,143 @@
+.root {
+    -fx-font-family: "Manrope", sans-serif;
+    -fx-background-color: #101622;
+}
+
+.content-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.content {
+    -fx-padding: 80 180;
+    -fx-background-color: #101622;
+}
+
+.root-container {
+    -fx-background-color: #101622;
+    -fx-font-family: "Manrope", sans-serif;
+}
+
+.profile-name {
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+.profile-role {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 12px;
+}
+
+.nav-container {
+    -fx-padding: 30 0 0 0;
+}
+
+.nav-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9da6b9;
+    -fx-alignment: center_left;
+    -fx-pref-width: 250;
+    -fx-padding: 10 15;
+    -fx-cursor: hand;
+    -fx-font-size: 13px;
+    -fx-background-radius: 8;
+}
+
+.nav-button:hover {
+    -fx-background-color: #1a202c;
+    -fx-text-fill: white;
+}
+
+.nav-active {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.nav-separator {
+    -fx-padding: 10 0;
+    -fx-background-color: #2d3748;
+}
+
+.page-title {
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+}
+
+.page-subtitle {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 14px;
+}
+
+.btn-primary {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+}
+
+.stat-card {
+    -fx-background-color: #1a202c;
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-border-color: #2d3748;
+    -fx-border-radius: 12;
+    -fx-spacing: 5;
+}
+
+.stat-label {
+    -fx-text-fill: #9da6b9;
+    -fx-font-size: 13px;
+}
+
+.stat-value {
+    -fx-text-fill: white;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.search-field {
+    -fx-background-color: #11161f;
+    -fx-text-fill: white;
+    -fx-border-color: #2d3748;
+    -fx-background-radius: 8;
+    -fx-border-radius: 8;
+    -fx-pref-height: 40px;
+}
+
+ListView {
+    -fx-background-color: #19202c;
+    -fx-text-fill: white;
+    -fx-font-size: 16px;
+    -fx-background-radius: 16px;
+}
+
+.list-cell {
+    -fx-background-color: #19202c;
+    -fx-background-radius: 20px;
+    -fx-font-weight: bold;
+    -fx-padding: 10px;
+    -fx-pref-height: -1;
+}
+
+.list-cell .label {
+    -fx-fill: white;
+}
+
+.list-cell:hover {
+    -fx-background-color: #1e2837;
+    -fx-cursor: hand;
+}
+
+.list-cell:selected {
+    -fx-background-color: #2b3547;
+}
+
+.muted {
+    -fx-text-fill: #9da6b9;
+}
