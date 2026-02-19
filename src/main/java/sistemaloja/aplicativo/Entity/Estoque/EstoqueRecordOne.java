@@ -22,4 +22,12 @@ public record EstoqueRecordOne(String id, String nome, String idFilial, String i
         this.descricao = descricao;
         this.codItem = codItem;
     }
+
+    public boolean emBaixoEstoque() {
+        return quantidade != null && Integer.parseInt(quantidade) <= 10;
+    }
+
+    public boolean emFalta() {
+        return quantidade != null && Integer.parseInt(quantidade) <= 0;
+    }
 }

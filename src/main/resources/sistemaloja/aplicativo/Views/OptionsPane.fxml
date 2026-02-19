@@ -12,7 +12,7 @@
 
     <center>
         <ScrollPane fitToWidth="true" styleClass="content-scroll">
-            <VBox spacing="25" style="-fx-padding: 30 40;">
+            <VBox spacing="25" styleClass="content">
 
                 <HBox alignment="BOTTOM_LEFT" spacing="20">
                     <VBox HBox.hgrow="ALWAYS" spacing="5">
@@ -31,16 +31,16 @@
                     </columnConstraints>
 
                     <VBox styleClass="stat-card" GridPane.columnIndex="0">
-                        <Label text="Total de Itens" styleClass="stat-label"/>
-                        <Label text="1,240" styleClass="stat-value"/>
+                        <Label text="Total de" styleClass="stat-label" fx:id="boxOneLabel"/>
+                        <Label text="0" styleClass="stat-value" fx:id="boxOneValueLabel"/>
                     </VBox>
                     <VBox styleClass="stat-card" GridPane.columnIndex="1">
-                        <Label text="Itens Baixos em Estoque" styleClass="stat-label"/>
-                        <Label text="12" styleClass="stat-value"/>
+                        <Label text="Itens Baixos em Estoque" styleClass="stat-label" fx:id="boxTwoLabel"/>
+                        <Label text="0" styleClass="stat-value" fx:id="boxTwoValueLabel"/>
                     </VBox>
                     <VBox styleClass="stat-card" GridPane.columnIndex="2">
-                        <Label text="Itens sem Estoque" styleClass="stat-label"/>
-                        <Label text="4" styleClass="stat-value"/>
+                        <Label text="Itens sem Estoque" styleClass="stat-label" fx:id="boxThreeLabel"/>
+                        <Label text="0" styleClass="stat-value" fx:id="boxThreeValueLabel"/>
                     </VBox>
                 </GridPane>
 
@@ -49,7 +49,7 @@
                     <Button text="Pesquisar" styleClass="btn-primary" />
                 </HBox>
 
-                <VBox styleClass="card">
+                <VBox styleClass="stat-card">
                     <ListView maxWidth="Infinity" fx:id="listaObjetos" /> <!-- Será preenchido pelo Controller -->
                 </VBox>
             </VBox>

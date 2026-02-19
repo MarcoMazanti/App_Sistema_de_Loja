@@ -24,7 +24,7 @@
                     <Label text="Gerencie o seu perfil e visualise o seus dados da contrato." styleClass="page-subtitle"/>
                 </VBox>
 
-                <VBox styleClass="card">
+                <VBox styleClass="card" style="-fx-border-color: #2d3748;-fx-border-radius: 12;">
                     <HBox spacing="24" alignment="BOTTOM_LEFT">
 
                         <ImageView fitWidth="100" fitHeight="100">

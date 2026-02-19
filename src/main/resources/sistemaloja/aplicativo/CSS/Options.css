@@ -1,8 +1,18 @@
+.root {
+    -fx-font-family: "Manrope", sans-serif;
+    -fx-background-color: #101622;
+}
+
 .content-scroll {
+    -fx-background: transparent;
     -fx-background-color: transparent;
-    -fx-background: #101622;
-    -fx-padding: 0;
+    -fx-border-color: transparent;
     -fx-background-insets: 0;
+}
+
+.content {
+    -fx-padding: 80 180;
+    -fx-background-color: #101622;
 }
 
 .root-container {
@@ -126,4 +136,8 @@ ListView {
 
 .list-cell:selected {
     -fx-background-color: #2b3547;
+}
+
+.muted {
+    -fx-text-fill: #9da6b9;
 }
