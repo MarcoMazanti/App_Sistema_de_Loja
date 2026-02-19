@@ -1,9 +1,8 @@
 # Aplicativo de Gerenciamento de Loja
 - - -
 ### Objetivos Primários
-- [ ] Aprimorar o conhecimento em JavaFX
-- [ ] Compreender criptografía híbrida
-- [ ] Aprofundamento em JavaScript
+- [X] Aprimorar o conhecimento em JavaFX
+- [X] Compreender criptografía híbrida
 - [ ] Aprimoramento da documentação
 
 - - -
@@ -11,7 +10,7 @@
 ### Tecnologias
 - Java
 - JavaFX
-- JavaScript/HTML/CSS
+- FXML/CSS
 - Requisição HTTP
 - Criptografia Híbrida
 
