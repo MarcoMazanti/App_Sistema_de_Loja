@@ -55,10 +55,10 @@
                     <HBox spacing="20">
                         <ListView maxWidth="Infinity" fx:id="listaObjetos" HBox.hgrow="ALWAYS" /> <!-- Será preenchido pelo Controller -->
                         <VBox alignment="CENTER" spacing="15">
-                            <ImageView fitWidth="35" fitHeight="35" fx:id="boxEdit">
+                            <ImageView fitWidth="35" fitHeight="35" fx:id="boxEdit" onMouseClicked="#editarObj" style="-fx-cursor: hand;">
                                 <Image url="@../Images/edit.png" />
                             </ImageView>
-                            <ImageView fitWidth="35" fitHeight="35" fx:id="boxDelete">
+                            <ImageView fitWidth="35" fitHeight="35" fx:id="boxDelete" onMouseClicked="#deletarObj" style="-fx-cursor: hand;">
                                 <Image url="@../Images/delete.png" />
                             </ImageView>
                         </VBox>

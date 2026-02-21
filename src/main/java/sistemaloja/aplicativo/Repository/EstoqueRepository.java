@@ -244,7 +244,7 @@ public class EstoqueRepository {
                     .uri(URI.create(URL + "/id/" + id))
                     .header("ModelRecord", String.valueOf(modelRecord))
                     .header("secretKey", criptSecretKey(secretKey))
-                    .GET()
+                    .DELETE()
                     .build();
 
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
