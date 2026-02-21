@@ -45,11 +45,6 @@
     -fx-text-fill: white;
 }
 
-.logout {
-    -fx-background-color: transparent;
-    -fx-text-fill: #ef4444;
-}
-
 .content {
     -fx-padding: 80 180;
     -fx-background-color: #101622;

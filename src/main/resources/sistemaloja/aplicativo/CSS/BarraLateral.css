@@ -41,3 +41,8 @@
     -fx-background-color: transparent;
     -fx-text-fill: #ef4444;
 }
+
+.home {
+    -fx-background-color: transparent;
+    -fx-text-fill: #0c970c;
+}

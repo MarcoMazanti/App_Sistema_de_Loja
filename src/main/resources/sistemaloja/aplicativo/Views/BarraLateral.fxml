@@ -21,7 +21,6 @@
     </HBox>
 
     <VBox spacing="6" style="-fx-spacing: 6;">
-        <Button text="Home" styleClass="nav-item" onMouseClicked="#onHomeDisplayClicked" />
         <Button text="Filial" styleClass="nav-item" onMouseClicked="#onFilialDisplayClicked" />
         <Button text="Empregado" styleClass="nav-item" onMouseClicked="#onEmpregadoDisplayClicked" />
         <Button text="Cliente" styleClass="nav-item" onMouseClicked="#onClienteDisplayClicked" />
@@ -32,10 +31,19 @@
 
     <Region VBox.vgrow="ALWAYS"/>
 
-    <HBox style="-fx-cursor: hand" >
-        <ImageView fitWidth="25" fitHeight="25" >
-            <Image url="@../Images/exit.png" />
-        </ImageView>
-        <Button text="Logout" styleClass="logout" onMouseClicked="#sairAplicativo"/>
+    <HBox>
+        <HBox onMouseClicked="#sairAplicativo" style="-fx-cursor: hand">
+            <ImageView fitWidth="25" fitHeight="25" >
+                <Image url="@../Images/exit.png" />
+            </ImageView>
+            <Button text="Logout" styleClass="logout"/>
+        </HBox>
+        <HBox HBox.hgrow="ALWAYS" />
+        <HBox onMouseClicked="#onHomeDisplayClicked" style="-fx-cursor: hand">
+            <ImageView fitWidth="25" fitHeight="25" >
+                <Image url="@../Images/home.png" />
+            </ImageView>
+            <Button text="home" styleClass="home"/>
+        </HBox>
     </HBox>
 </VBox>

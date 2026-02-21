@@ -9,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
@@ -64,6 +65,10 @@ public class OptionsController {
     public Label boxThreeValueLabel;
     @FXML
     public ListView<Object> listaObjetos;
+    @FXML
+    public ImageView boxEdit;
+    @FXML
+    public ImageView boxDelete;
 
     @FXML
     private BarraLateralController barraLateralController;

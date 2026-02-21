@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="sistemaloja.aplicativo.Controller.OptionsController"
             stylesheets="@../CSS/Options.css" styleClass="root">
@@ -50,7 +52,17 @@
                 </HBox>
 
                 <VBox styleClass="stat-card">
-                    <ListView maxWidth="Infinity" fx:id="listaObjetos" /> <!-- Será preenchido pelo Controller -->
+                    <HBox spacing="20">
+                        <ListView maxWidth="Infinity" fx:id="listaObjetos" HBox.hgrow="ALWAYS" /> <!-- Será preenchido pelo Controller -->
+                        <VBox alignment="CENTER" spacing="15">
+                            <ImageView fitWidth="35" fitHeight="35" fx:id="boxEdit">
+                                <Image url="@../Images/edit.png" />
+                            </ImageView>
+                            <ImageView fitWidth="35" fitHeight="35" fx:id="boxDelete">
+                                <Image url="@../Images/delete.png" />
+                            </ImageView>
+                        </VBox>
+                    </HBox>
                 </VBox>
             </VBox>
         </ScrollPane>
