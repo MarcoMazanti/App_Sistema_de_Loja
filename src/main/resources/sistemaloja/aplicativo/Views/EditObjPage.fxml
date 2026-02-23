@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="sistemaloja.aplicativo.Controller.EditObjController"
+            stylesheets="@../CSS/EditObj.css" styleClass="root">
+    <left>
+        <fx:include fx:id="barraLateral" source="BarraLateral.fxml" />
+    </left>
+
+    <center>
+        <ScrollPane styleClass="content-scroll" fitToWidth="true">
+            <VBox alignment="TOP_CENTER" spacing="20" styleClass="content">
+                <Label text="Tipo" fx:id="tituloLabel" styleClass="page-title" />
+
+                <HBox alignment="CENTER">
+                    <HBox styleClass="card" alignment="CENTER">
+                        <VBox alignment="CENTER" fx:id="boxImutavel" spacing="10"/>
+                        <Separator orientation="VERTICAL"/>
+                        <VBox alignment="CENTER" fx:id="boxMutavel" spacing="10"/>
+                    </HBox>
+                </HBox>
+
+                <HBox alignment="CENTER" spacing="10">
+                    <Button text="Enviar" onMouseClicked="#enviarButton"/>
+                    <Button text="Cancelar" onMouseClicked="#cancelarButton"/>
+                </HBox>
+            </VBox>
+        </ScrollPane>
+    </center>
+</BorderPane>

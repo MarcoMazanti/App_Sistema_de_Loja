@@ -6,9 +6,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordThree;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordTwo;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordThree;
-import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordTwo;
 import sistemaloja.aplicativo.Security.Cript.Criptografar;
 import sistemaloja.aplicativo.Security.Decript.Descriptografar;
 

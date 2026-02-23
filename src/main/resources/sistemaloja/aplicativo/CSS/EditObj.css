@@ -1,0 +1,51 @@
+.root {
+    -fx-font-family: "Manrope", sans-serif;
+    -fx-background-color: #101622;
+}
+
+.content-scroll {
+    -fx-background: transparent;
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.content {
+    -fx-padding: 80 180;
+    -fx-background-color: #101622;
+}
+
+.page-title {
+    -fx-text-fill: white;
+    -fx-font-size: 32px;
+    -fx-font-weight: 800;
+}
+
+.card {
+    -fx-pref-width: 500;
+    -fx-pref-height: 400;
+    -fx-background-color: #1a202c;
+    -fx-padding: 20;
+    -fx-background-radius: 12;
+    -fx-border-color: #2d3748;
+    -fx-border-radius: 12;
+    -fx-spacing: 5;
+}
+
+Button {
+    -fx-background-color: #135bec;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 10 20;
+    -fx-background-radius: 8;
+}
+
+Button:hover {
+    -fx-cursor: hand;
+}
+
+.label-title {
+    -fx-text-fill: #9da6b9;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+}

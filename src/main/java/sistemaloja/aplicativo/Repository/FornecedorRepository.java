@@ -125,7 +125,7 @@ public class FornecedorRepository {
         }
     }
 
-    public Object putAlterarCliente(Object fornecedor, int idRequerinte, int modelRecord) {
+    public Object putAlterarFornecedor(Object fornecedor, int idRequerinte, int modelRecord) {
         try {
             SecretKey secretKey = gerarSecretKey();
             FornecedorFactory fornecedorFactory = new FornecedorFactory(secretKey);

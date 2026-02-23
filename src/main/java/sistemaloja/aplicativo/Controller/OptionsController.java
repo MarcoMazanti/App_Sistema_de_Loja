@@ -4,14 +4,18 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 import sistemaloja.aplicativo.Entity.Estoque.EstoqueRecordOne;
@@ -69,6 +73,27 @@ public class OptionsController {
     public void editarObj(MouseEvent mouseEvent) {
         if (listaObjetos.getSelectionModel().getSelectedItem() != null) {
             Object object = listaObjetos.getSelectionModel().getSelectedItem();
+
+            try {
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/EditObjPage.fxml"));
+                Parent root = fxmlLoader.load();
+
+                EditObjController controller = fxmlLoader.getController();
+                controller.setTipo(tipo);
+                controller.setObject(object);
+                controller.setUsuarioLogado(usuarioLogado);
+
+                Scene scene = tituloPaginaLabel.getScene();
+                scene.setRoot(root);
+
+                Stage stage = (Stage) scene.getWindow();
+                stage.setMaximized(true);
+                stage.show();
+            } catch (Exception e) {
+                alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText("Erro ao trocar de página.");
+                alerta.show();
+            }
         } else {
             alerta = new Alert(Alert.AlertType.ERROR, "Selecione um objeto para editar.", ButtonType.OK);
             alerta.showAndWait();
@@ -142,8 +167,10 @@ public class OptionsController {
             boxOneLabel.setText("Total de " + tipo);
 
             if (tipo.equals("Pagamento")) {
+                boxEdit.setVisible(false);
                 boxDelete.setVisible(false);
             } else {
+                boxEdit.setVisible(true);
                 boxDelete.setVisible(true);
             }
         } else {
