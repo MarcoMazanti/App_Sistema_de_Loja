@@ -70,6 +70,30 @@ public class OptionsController {
     private BarraLateralController barraLateralController;
 
     @FXML
+    public void adicionarObj(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/EditObjPage.fxml"));
+            Parent root = fxmlLoader.load();
+
+            EditObjController controller = fxmlLoader.getController();
+            controller.setTipo(tipo);
+            controller.setCriar(true);
+            controller.setUsuarioLogado(usuarioLogado);
+
+            Scene scene = tituloPaginaLabel.getScene();
+            scene.setRoot(root);
+
+            Stage stage = (Stage) scene.getWindow();
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao trocar de página.");
+            alerta.show();
+        }
+    }
+
+    @FXML
     public void editarObj(MouseEvent mouseEvent) {
         if (listaObjetos.getSelectionModel().getSelectedItem() != null) {
             Object object = listaObjetos.getSelectionModel().getSelectedItem();
@@ -167,10 +191,8 @@ public class OptionsController {
             boxOneLabel.setText("Total de " + tipo);
 
             if (tipo.equals("Pagamento")) {
-                boxEdit.setVisible(false);
                 boxDelete.setVisible(false);
             } else {
-                boxEdit.setVisible(true);
                 boxDelete.setVisible(true);
             }
         } else {

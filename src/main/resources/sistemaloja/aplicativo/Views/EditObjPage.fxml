@@ -16,7 +16,7 @@
                 <Label text="Tipo" fx:id="tituloLabel" styleClass="page-title" />
 
                 <HBox alignment="CENTER">
-                    <HBox styleClass="card" alignment="CENTER">
+                    <HBox styleClass="card" alignment="CENTER" fx:id="mainBox">
                         <VBox alignment="CENTER" fx:id="boxImutavel" spacing="10"/>
                         <Separator orientation="VERTICAL"/>
                         <VBox alignment="CENTER" fx:id="boxMutavel" spacing="10"/>

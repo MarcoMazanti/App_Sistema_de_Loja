@@ -21,7 +21,7 @@
                         <Label text="Gerenciamento" styleClass="page-title" fx:id="tituloPaginaLabel" />
                     </VBox>
                     <HBox spacing="10">
-                        <Button text="Adicionar Novo Item" styleClass="btn-primary"/>
+                        <Button text="Adicionar Novo Item" styleClass="btn-primary" onMouseClicked="#adicionarObj"/>
                     </HBox>
                 </HBox>
 

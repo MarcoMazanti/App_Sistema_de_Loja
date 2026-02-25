@@ -2,10 +2,14 @@ package sistemaloja.aplicativo.Controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
@@ -13,10 +17,12 @@ import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 import sistemaloja.aplicativo.Entity.Estoque.EstoqueRecordOne;
 import sistemaloja.aplicativo.Entity.Filial.FilialRecordOne;
 import sistemaloja.aplicativo.Entity.Fornecedor.FornecedorRecordOne;
+import sistemaloja.aplicativo.Entity.Pagamento.ItemPagamentoRecordOne;
+import sistemaloja.aplicativo.Entity.Pagamento.PagamentoPayloadRecord;
+import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordOne;
 import sistemaloja.aplicativo.Repository.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class EditObjController {
     FilialRepository filialRepository = new FilialRepository();
@@ -30,10 +36,14 @@ public class EditObjController {
     private EmpregadoRecordOne usuarioLogado;
     private String tipo;
     private Object object;
+    private boolean criar = false;
+    private List<ItemPagamentoRecordOne> itensPagamento = new ArrayList<>();
     private Alert alerta;
 
     @FXML
     public Label tituloLabel;
+    @FXML
+    public HBox mainBox;
     @FXML
     public VBox boxImutavel;
     @FXML
@@ -57,6 +67,10 @@ public class EditObjController {
 
     public void setObject(Object object) {
         this.object = object;
+    }
+
+    public void setCriar(boolean criar) {
+        this.criar = criar;
     }
 
     @FXML
@@ -91,12 +105,23 @@ public class EditObjController {
     }
 
     private void gerarFXML() {
-        switch (tipo) {
-            case "Filial" -> carregarFilial();
-            case "Empregado" -> carregarEmpregado();
-            case "Cliente" -> carregarCliente();
-            case "Fornecedor" -> carregarFornecedor();
-            case "Estoque" -> carregarEstoque();
+        if (criar) {
+            switch (tipo) {
+                case "Filial" -> criarFilial();
+                case "Empregado" -> criarEmpregado();
+                case "Cliente", "Fornecedor" -> criarClienteFornecedor();
+                case "Estoque" -> criarEstoque();
+                case "Pagamento" -> criarPagamento();
+            }
+        } else {
+            switch (tipo) {
+                case "Filial" -> carregarFilial();
+                case "Empregado" -> carregarEmpregado();
+                case "Cliente" -> carregarCliente();
+                case "Fornecedor" -> carregarFornecedor();
+                case "Estoque" -> carregarEstoque();
+                case "Pagamento" -> carregarPagamento();
+            }
         }
     }
 
@@ -107,9 +132,306 @@ public class EditObjController {
             case "Cliente" -> salvarCliente();
             case "Fornecedor" -> salvarFornecedor();
             case "Estoque" -> salvarEstoque();
+            case "Pagamento" -> salvarPagamento();
         }
     }
 
+    // criar Obj
+    private void criarFilial() {
+        Label cnpjLabel = new Label("CNPJ: ");
+        Label telefoneLabel = new Label("Telafone: ");
+        Label quantEmpregadosLabel = new Label("Quantidade de Empregados: ");
+
+        Label fullAdressLabel = new Label("Endereço: ");
+        Label codCountryLabel = new Label("Código do País: ");
+        Label codEstadoLabel = new Label("Código do Estado: ");
+        Label codCidadeLabel = new Label("Código da Cidade: ");
+
+        cnpjLabel.getStyleClass().add("label-title");
+        telefoneLabel.getStyleClass().add("label-title");
+        quantEmpregadosLabel.getStyleClass().add("label-title");
+
+        fullAdressLabel.getStyleClass().add("label-title");
+        codCountryLabel.getStyleClass().add("label-title");
+        codEstadoLabel.getStyleClass().add("label-title");
+        codCidadeLabel.getStyleClass().add("label-title");
+
+        TextField cnpjField = new TextField();
+        TextField quantEmpregadosField = new TextField();
+        TextField telefoneField = new TextField();
+
+        TextField fullAdressField = new TextField();
+        TextField codCountryField = new TextField();
+        TextField codEstadoField = new TextField();
+        TextField codCidadeField = new TextField();
+
+        campos.put("cnpjField", cnpjField);
+        campos.put("quantEmpregadosField", quantEmpregadosField);
+        campos.put("telefoneField", telefoneField);
+
+        campos.put("fullAdressField", fullAdressField);
+        campos.put("codCountryField", codCountryField);
+        campos.put("codEstadoField", codEstadoField);
+        campos.put("codCidadeField", codCidadeField);
+
+        VBox boxCnpj = new VBox(cnpjLabel, cnpjField);
+        VBox boxQuantEmpregados = new VBox(quantEmpregadosLabel, quantEmpregadosField);
+        VBox boxTelefone = new VBox(telefoneLabel, telefoneField);
+
+        VBox boxFullAdress = new VBox(fullAdressLabel, fullAdressField);
+        VBox boxCodCountry = new VBox(codCountryLabel, codCountryField);
+        VBox boxCodEstado = new VBox(codEstadoLabel, codEstadoField);
+        VBox boxCodCidade = new VBox(codCidadeLabel, codCidadeField);
+
+        boxImutavel.getChildren().addAll(boxCnpj, boxQuantEmpregados, boxTelefone);
+        boxMutavel.getChildren().addAll(boxFullAdress, boxCodCountry, boxCodEstado, boxCodCidade);
+    }
+
+    private void criarEmpregado() {
+        Label nomeLabel = new Label("Nome: ");
+        Label cpfLabel = new Label("CPF: ");
+        Label emailLabel = new Label("Email: ");
+        Label senhaLabel = new Label("Senha: ");
+        Label telefoneLabel = new Label("Telefone: ");
+
+        Label salarioLabel = new Label("Salário: ");
+        Label cargoLabel = new Label("Cargo: ");
+        Label filialIdLabel = new Label("Filial ID: ");
+        Label aniversarioLabel = new Label("Aniversário: ");
+
+        nomeLabel.getStyleClass().add("label-title");
+        cpfLabel.getStyleClass().add("label-title");
+        emailLabel.getStyleClass().add("label-title");
+        senhaLabel.getStyleClass().add("label-title");
+        telefoneLabel.getStyleClass().add("label-title");
+
+        salarioLabel.getStyleClass().add("label-title");
+        cargoLabel.getStyleClass().add("label-title");
+        filialIdLabel.getStyleClass().add("label-title");
+        aniversarioLabel.getStyleClass().add("label-title");
+
+        TextField nomeField = new TextField();
+        TextField cpfField = new TextField();
+        TextField emailField = new TextField();
+        PasswordField senhaField = new PasswordField();
+        TextField telefoneField = new TextField();
+
+        TextField salarioField = new TextField();
+        ComboBox<String> cargoComboBox = new ComboBox<>();
+        TextField filialIdField = new TextField();
+        DatePicker aniversarioPicker = new DatePicker();
+
+        cargoComboBox.getItems().addAll("DONO", "GERENTE", "EMPREGADO");
+
+        campos.put("nomeField", nomeField);
+        campos.put("cpfField", cpfField);
+        campos.put("emailField", emailField);
+        campos.put("senhaField", senhaField);
+        campos.put("telefoneField", telefoneField);
+
+        campos.put("salarioField", salarioField);
+        campos.put("cargoComboBox", cargoComboBox);
+        campos.put("filialIdField", filialIdField);
+        campos.put("aniversarioPicker", aniversarioPicker);
+
+        VBox boxNome = new VBox(nomeLabel, nomeField);
+        VBox boxCpf = new VBox(cpfLabel, cpfField);
+        VBox boxEmail = new VBox(emailLabel, emailField);
+        VBox boxSenha = new VBox(senhaLabel, senhaField);
+        VBox boxTelefone = new VBox(telefoneLabel, telefoneField);
+        VBox boxSalario = new VBox(salarioLabel, salarioField);
+        VBox boxCargo = new VBox(cargoLabel, cargoComboBox);
+        VBox boxFilialId = new VBox(filialIdLabel, filialIdField);
+        VBox boxAniversario = new VBox(aniversarioLabel, aniversarioPicker);
+
+        boxImutavel.getChildren().addAll(boxNome, boxCpf, boxEmail, boxSenha, boxTelefone);
+        boxMutavel.getChildren().addAll(boxSalario, boxCargo, boxFilialId, boxAniversario);
+    }
+
+    private void criarClienteFornecedor() {
+        Label nomeLabel = new Label("Nome: ");
+        Label cpfOrCnpjLabel = new Label("CPF/CNPJ: ");
+        Label emailLabel = new Label("Email: ");
+        Label telefoneLabel = new Label("Telefone: ");
+
+        Label fullAdressLabel = new Label("Endereço: ");
+        Label codCountryLabel = new Label("Código do País: ");
+        Label codEstadoLabel = new Label("Código do Estado: ");
+        Label codCidadeLabel = new Label("Código da Cidade: ");
+
+        nomeLabel.getStyleClass().add("label-title");
+        cpfOrCnpjLabel.getStyleClass().add("label-title");
+        emailLabel.getStyleClass().add("label-title");
+        telefoneLabel.getStyleClass().add("label-title");
+
+        fullAdressLabel.getStyleClass().add("label-title");
+        codCountryLabel.getStyleClass().add("label-title");
+        codEstadoLabel.getStyleClass().add("label-title");
+        codCidadeLabel.getStyleClass().add("label-title");
+
+        TextField nomeField = new TextField();
+        TextField cpfOrCnpjField = new TextField();
+        TextField emailField = new TextField();
+        TextField telefoneField = new TextField();
+
+        TextField fullAdressField = new TextField();
+        TextField codCountryField = new TextField();
+        TextField codEstadoField = new TextField();
+        TextField codCidadeField = new TextField();
+
+        campos.put("nomeField", nomeField);
+        campos.put("cpfOrCnpjField", cpfOrCnpjField);
+        campos.put("emailField", emailField);
+        campos.put("telefoneField", telefoneField);
+
+        campos.put("fullAdressField", fullAdressField);
+        campos.put("codCountryField", codCountryField);
+        campos.put("codEstadoField", codEstadoField);
+        campos.put("codCidadeField", codCidadeField);
+
+        VBox boxNome = new VBox(nomeLabel, nomeField);
+        VBox boxCpfOrCnpj = new VBox(cpfOrCnpjLabel, cpfOrCnpjField);
+        VBox boxEmail = new VBox(emailLabel, emailField);
+        VBox boxTelefone = new VBox(telefoneLabel, telefoneField);
+
+        VBox boxFullAdress = new VBox(fullAdressLabel, fullAdressField);
+        VBox boxCodCountry = new VBox(codCountryLabel, codCountryField);
+        VBox boxCodEstado = new VBox(codEstadoLabel, codEstadoField);
+        VBox boxCodCidade = new VBox(codCidadeLabel, codCidadeField);
+
+        boxImutavel.getChildren().addAll(boxNome, boxCpfOrCnpj, boxEmail, boxTelefone);
+        boxMutavel.getChildren().addAll(boxFullAdress, boxCodCountry, boxCodEstado, boxCodCidade);
+    }
+
+    private void criarEstoque() {
+        Label nomeLabel = new Label("Nome: ");
+        Label idFilialLabel = new Label("Filial ID: ");
+        Label idFornecedorLabel = new Label("Fornecedor ID: ");
+
+        Label precoLabel = new Label("Preço: ");
+        Label quantidadeLabel = new Label("Quantidade: ");
+        Label descricaoLabel = new Label("Descrição: ");
+
+        nomeLabel.getStyleClass().add("label-title");
+        idFilialLabel.getStyleClass().add("label-title");
+        idFornecedorLabel.getStyleClass().add("label-title");
+
+        precoLabel.getStyleClass().add("label-title");
+        quantidadeLabel.getStyleClass().add("label-title");
+        descricaoLabel.getStyleClass().add("label-title");
+
+        TextField nomeField = new TextField();
+        TextField idFilialField = new TextField();
+        TextField idFornecedorField = new TextField();
+
+        TextField precoField = new TextField();
+        TextField quantidadeField = new TextField();
+        TextField descricaoField = new TextField();
+
+        campos.put("nomeField", nomeField);
+        campos.put("idFilialField", idFilialField);
+        campos.put("idFornecedorField", idFornecedorField);
+
+        campos.put("precoField", precoField);
+        campos.put("quantidadeField", quantidadeField);
+        campos.put("descricaoField", descricaoField);
+
+        VBox boxNome = new VBox(nomeLabel, nomeField);
+        VBox boxIdFilial = new VBox(idFilialLabel, idFilialField);
+        VBox boxIdFornecedor = new VBox(idFornecedorLabel, idFornecedorField);
+
+        VBox boxPreco = new VBox(precoLabel, precoField);
+        VBox boxQuantidade = new VBox(quantidadeLabel, quantidadeField);
+        VBox boxDescricao = new VBox(descricaoLabel, descricaoField);
+
+        boxImutavel.getChildren().addAll(boxNome, boxIdFilial, boxIdFornecedor);
+        boxMutavel.getChildren().addAll(boxPreco, boxQuantidade, boxDescricao);
+    }
+
+    private void criarPagamento() {
+        Label idClienteLabel = new Label("Cliente ID: ");
+        Label idFilialLabel = new Label("Filial ID: ");
+        Label precoTotal = new Label("Preço Total: ");
+        Label precoPago = new Label("Preço Pago: ");
+
+        idClienteLabel.getStyleClass().add("label-title");
+        idFilialLabel.getStyleClass().add("label-title");
+        precoTotal.getStyleClass().add("label-title");
+        precoPago.getStyleClass().add("label-title");
+
+        TextField idClienteField = new TextField();
+        TextField idFilialField = new TextField();
+        TextField precoTotalField = new TextField();
+        TextField precoPagoField = new TextField();
+
+        campos.put("idClienteField", idClienteField);
+        campos.put("idFilialField", idFilialField);
+        campos.put("precoTotalField", precoTotalField);
+        campos.put("precoPagoField", precoPagoField);
+
+        VBox boxIdCliente = new VBox(idClienteLabel, idClienteField);
+        VBox boxIdFilial = new VBox(idFilialLabel, idFilialField);
+        VBox boxPrecoTotal = new VBox(precoTotal, precoTotalField);
+        VBox boxPrecoPago = new VBox(precoPago, precoPagoField);
+
+        boxImutavel.getChildren().addAll(boxIdCliente, boxIdFilial, boxPrecoTotal, boxPrecoPago);
+
+        Label idItemLabel = new Label("Item ID: ");
+        Label nomeLabel = new Label("Nome do Item: ");
+        Label quantidadeLabel = new Label("Quantidade: ");
+        Label precoUnitLabel = new Label("Preço Unitário: ");
+
+        idItemLabel.getStyleClass().add("label-title");
+        nomeLabel.getStyleClass().add("label-title");
+        quantidadeLabel.getStyleClass().add("label-title");
+        precoUnitLabel.getStyleClass().add("label-title");
+
+        TextField idItemField = new TextField();
+        TextField nomeItemField = new TextField();
+        TextField quantidadeItemField = new TextField();
+        TextField precoUnitItemField = new TextField();
+
+        campos.put("idItemField", idItemField);
+        campos.put("nomeItemField", nomeItemField);
+        campos.put("quantidadeItemField", quantidadeItemField);
+        campos.put("precoUnitItemField", precoUnitItemField);
+
+        VBox boxIdItem = new VBox(idItemLabel, idItemField);
+        VBox boxNomeItem = new VBox(nomeLabel, nomeItemField);
+        VBox boxQuantidadeItem = new VBox(quantidadeLabel, quantidadeItemField);
+        VBox boxPrecoUnitItem = new VBox(precoUnitLabel, precoUnitItemField);
+
+        boxMutavel.getChildren().addAll(boxIdItem, boxNomeItem, boxQuantidadeItem, boxPrecoUnitItem);
+
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("@../Images/add.png")));
+        ImageView imageView = new ImageView(image);
+        imageView.setFitHeight(40);
+        imageView.setFitWidth(40);
+
+        imageView.setOnMouseClicked(event -> {
+            TextField idItem = (TextField) campos.get("idItemField");
+            TextField nomeItem = (TextField) campos.get("nomeItemField");
+            TextField quantidadeItem = (TextField) campos.get("quantidadeItemField");
+            TextField precoUnitItem = (TextField) campos.get("precoUnitItemField");
+
+            itensPagamento.add(new ItemPagamentoRecordOne(null, null, idItem.getText(),
+                    nomeItem.getText(), quantidadeItem.getText(), precoUnitItem.getText()));
+            carregarListaItensPagamento();
+        });
+
+        mainBox.getChildren().addLast(imageView);
+
+        Separator separator = new Separator();
+        separator.setOrientation(Orientation.VERTICAL);
+
+        mainBox.getChildren().addLast(separator);
+
+        ListView<ItemPagamentoRecordOne> listView = new ListView<>();
+        campos.put("listView", listView);
+        mainBox.getChildren().addLast(listView);
+    }
+
+    // Editar Obj
     private void carregarFilial() {
         FilialRecordOne filial = (FilialRecordOne) object;
 
@@ -168,24 +490,6 @@ public class EditObjController {
 
         boxImutavel.getChildren().addAll(boxId, boxCnpj, boxQuantEmpregados, boxCodFilial);
         boxMutavel.getChildren().addAll(boxTelefone, boxFullAdress, boxCodCountry, boxCodEstado, boxCodCidade);
-    }
-
-    private void salvarFilial() {
-        Label idValorLabel = (Label) campos.get("idValorLabel");
-        Label cnpjValorLabel = (Label) campos.get("cnpjValorLabel");
-        Label quantEmpregadosValorLabel = (Label) campos.get("quantEmpregadosValorLabel");
-        Label codFilialValorLabel = (Label) campos.get("codFilialValorLabel");
-        TextField telefoneField = (TextField) campos.get("telefoneField");
-        TextField fullAdressField = (TextField) campos.get("fullAdressField");
-        TextField codCountryField = (TextField) campos.get("codCountryField");
-        TextField codEstadoField = (TextField) campos.get("codEstadoField");
-        TextField codCidadeField = (TextField) campos.get("codCidadeField");
-
-        FilialRecordOne filial = new FilialRecordOne(idValorLabel.getText(), cnpjValorLabel.getText(),
-                telefoneField.getText(), quantEmpregadosValorLabel.getText(), fullAdressField.getText(),
-                codCountryField.getText(), codEstadoField.getText(), codCidadeField.getText(), codFilialValorLabel.getText());
-
-        filialRepository.putFilial(filial, Integer.parseInt(usuarioLogado.id()), 1);
     }
 
     private void carregarEmpregado() {
@@ -259,29 +563,6 @@ public class EditObjController {
         boxMutavel.getChildren().addAll(boxTelefone, boxSalario, boxCargo, boxFilialId, boxAniversario);
     }
 
-    private void salvarEmpregado() {
-        EmpregadoRecordOne oldEmpregado = (EmpregadoRecordOne) object;
-
-        Label idValorLabel = (Label) campos.get("idValorLabel");
-        Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
-        Label cpfValorLabel = (Label) campos.get("cpfValorLabel");
-        Label emailValorLabel = (Label) campos.get("emailValorLabel");
-        Label dataAdimissaoValorLabel = (Label) campos.get("dataAdimissaoValorLabel");
-        Label codEmpregadoValorLabel = (Label) campos.get("codEmpregadoValorLabel");
-        TextField telefoneField = (TextField) campos.get("telefoneField");
-        TextField salarioField = (TextField) campos.get("salarioField");
-        ComboBox<String> cargoComboBox = (ComboBox<String>) campos.get("cargoComboBox");
-        TextField filialIdField = (TextField) campos.get("filialIdField");
-        DatePicker aniversarioPicker = (DatePicker) campos.get("aniversarioPicker");
-
-        EmpregadoRecordOne empregado = new EmpregadoRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
-                cpfValorLabel.getText(), oldEmpregado.senha(), emailValorLabel.getText(), telefoneField.getText(),
-                salarioField.getText(), cargoComboBox.getValue(), filialIdField.getText(), aniversarioPicker.getValue().toString(),
-                dataAdimissaoValorLabel.getText(), codEmpregadoValorLabel.getText());
-
-        empregadoRepository.putAlterarEmpregado(empregado, Integer.parseInt(usuarioLogado.id()), 1);
-    }
-
     private void carregarCliente() {
         ClienteRecordOne cliente = (ClienteRecordOne) object;
 
@@ -344,26 +625,6 @@ public class EditObjController {
 
         boxImutavel.getChildren().addAll(boxId, boxNome, boxCpfOrCnpj, boxEmail, boxCodCliente);
         boxMutavel.getChildren().addAll(boxTelefone, boxFullAdress, boxCodCountry, boxCodEstado, boxCodCidade);
-    }
-
-    private void salvarCliente() {
-        Label idValorLabel = (Label) campos.get("idValorLabel");
-        Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
-        Label cpfOrCnpjValorLabel = (Label) campos.get("cpfOrCnpjValorLabel");
-        Label emailValorLabel = (Label) campos.get("emailValorLabel");
-        Label codClienteValorLabel = (Label) campos.get("codClienteValorLabel");
-        TextField telefoneField = (TextField) campos.get("telefoneField");
-        TextField fullAdressField = (TextField) campos.get("fullAdressField");
-        TextField codCountryField = (TextField) campos.get("codCountryField");
-        TextField codEstadoField = (TextField) campos.get("codEstadoField");
-        TextField codCidadeField = (TextField) campos.get("codCidadeField");
-
-        ClienteRecordOne cliente = new ClienteRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
-                cpfOrCnpjValorLabel.getText(), emailValorLabel.getText(), telefoneField.getText(),
-                fullAdressField.getText(), codCountryField.getText(), codEstadoField.getText(),
-                codCidadeField.getText(), codClienteValorLabel.getText());
-
-        clienteRepository.putAlterarCliente(cliente, Integer.parseInt(usuarioLogado.id()), 1);
     }
 
     private void carregarFornecedor() {
@@ -430,26 +691,6 @@ public class EditObjController {
         boxMutavel.getChildren().addAll(boxTelefone, boxFullAdress, boxCodCountry, boxCodEstado, boxCodCidade);
     }
 
-    private void salvarFornecedor() {
-        Label idValorLabel = (Label) campos.get("idValorLabel");
-        Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
-        Label cpfOrCnpjValorLabel = (Label) campos.get("cpfOrCnpjValorLabel");
-        Label emailValorLabel = (Label) campos.get("emailValorLabel");
-        Label codFornecedorValorLabel = (Label) campos.get("codFornecedorValorLabel");
-        TextField telefoneField = (TextField) campos.get("telefoneField");
-        TextField fullAdressField = (TextField) campos.get("fullAdressField");
-        TextField codCountryField = (TextField) campos.get("codCountryField");
-        TextField codEstadoField = (TextField) campos.get("codEstadoField");
-        TextField codCidadeField = (TextField) campos.get("codCidadeField");
-
-        FornecedorRecordOne fornecedor = new FornecedorRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
-                cpfOrCnpjValorLabel.getText(), emailValorLabel.getText(), telefoneField.getText(),
-                fullAdressField.getText(), codCountryField.getText(), codEstadoField.getText(),
-                codCidadeField.getText(), codFornecedorValorLabel.getText());
-
-        fornecedorRepository.putAlterarFornecedor(fornecedor, Integer.parseInt(usuarioLogado.id()), 1);
-    }
-
     private void carregarEstoque() {
         EstoqueRecordOne estoque = (EstoqueRecordOne) object;
 
@@ -504,20 +745,256 @@ public class EditObjController {
         boxMutavel.getChildren().addAll(boxPreco, boxQuantidade, boxDescricao);
     }
 
+    private void carregarPagamento() {
+        PagamentoRecordOne pagamento = (PagamentoRecordOne) object;
+
+        Label idLabel = new Label("ID: ");
+        Label idClienteLabel = new Label("Cliente ID: ");
+        Label idFilialLabel = new Label("Filial ID: ");
+        Label precoTotalLabel = new Label("Preço Total: ");
+        Label precoPagoLabel = new Label("Preço Pago: ");
+        Label dataCompraLabel = new Label("Data da Compra: ");
+        Label codPagamentoLabel = new Label("Código do Pagamento: ");
+
+        idLabel.getStyleClass().add("label-title");
+        idClienteLabel.getStyleClass().add("label-title");
+        idFilialLabel.getStyleClass().add("label-title");
+        precoTotalLabel.getStyleClass().add("label-title");
+        precoPagoLabel.getStyleClass().add("label-title");
+        dataCompraLabel.getStyleClass().add("label-title");
+        codPagamentoLabel.getStyleClass().add("label-title");
+
+        Label idValorLabel = new Label(pagamento.id());
+        Label idClienteValorLabel = new Label(pagamento.idCliente());
+        Label idFilialValorLabel = new Label(pagamento.idFilial());
+        Label precoTotalValorLabel = new Label(pagamento.precoTotal());
+        Label dataCompraValorLabel = new Label(pagamento.dataCompra());
+        Label codPagamentoValorLabel = new Label(pagamento.codPagamento());
+
+        TextField precoPagoField = new TextField(pagamento.precoPago());
+
+        campos.put("idValorLabel", idValorLabel);
+        campos.put("idClienteValorLabel", idClienteValorLabel);
+        campos.put("idFilialValorLabel", idFilialValorLabel);
+        campos.put("precoTotalValorLabel", precoTotalValorLabel);
+        campos.put("dataCompraValorLabel", dataCompraValorLabel);
+        campos.put("codPagamentoValorLabel", codPagamentoValorLabel);
+
+        campos.put("precoPagoField", precoPagoField);
+
+        VBox boxId = new VBox(idLabel, idValorLabel);
+        VBox boxIdCliente = new VBox(idClienteLabel, idClienteValorLabel);
+        VBox boxIdFilial = new VBox(idFilialLabel, idFilialValorLabel);
+        VBox boxPrecoTotal = new VBox(precoTotalLabel, precoTotalValorLabel);
+        VBox boxDataCompra = new VBox(dataCompraLabel, dataCompraValorLabel);
+        VBox boxCodPagamento = new VBox(codPagamentoLabel, codPagamentoValorLabel);
+
+        VBox boxPrecoPago = new VBox(precoPagoLabel, precoPagoField);
+
+        boxImutavel.getChildren().addAll(boxId, boxIdCliente, boxIdFilial, boxPrecoTotal, boxDataCompra, boxCodPagamento);
+        boxMutavel.getChildren().addAll(boxPrecoPago);
+    }
+
+    // Salvar Obj
+    private void salvarFilial() {
+        TextField telefoneField = (TextField) campos.get("telefoneField");
+        TextField fullAdressField = (TextField) campos.get("fullAdressField");
+        TextField codCountryField = (TextField) campos.get("codCountryField");
+        TextField codEstadoField = (TextField) campos.get("codEstadoField");
+        TextField codCidadeField = (TextField) campos.get("codCidadeField");
+
+        if (criar) {
+            TextField cnpjField = (TextField) campos.get("cnpjField");
+            TextField quantEmpregadosField = (TextField) campos.get("quantEmpregadosField");
+
+            FilialRecordOne filial = new FilialRecordOne(null, cnpjField.getText(), telefoneField.getText(), quantEmpregadosField.getText(),
+                    fullAdressField.getText(),codCountryField.getText(), codEstadoField.getText(), codCidadeField.getText(), null);
+
+            filialRepository.postFilial(filial, Integer.parseInt(usuarioLogado.id()), 1);
+        } else {
+            Label idValorLabel = (Label) campos.get("idValorLabel");
+            Label cnpjValorLabel = (Label) campos.get("cnpjValorLabel");
+            Label quantEmpregadosValorLabel = (Label) campos.get("quantEmpregadosValorLabel");
+            Label codFilialValorLabel = (Label) campos.get("codFilialValorLabel");
+
+            FilialRecordOne filial = new FilialRecordOne(idValorLabel.getText(), cnpjValorLabel.getText(),
+                    telefoneField.getText(), quantEmpregadosValorLabel.getText(), fullAdressField.getText(),
+                    codCountryField.getText(), codEstadoField.getText(), codCidadeField.getText(), codFilialValorLabel.getText());
+
+            filialRepository.putFilial(filial, Integer.parseInt(usuarioLogado.id()), 1);
+        }
+    }
+
+    private void salvarEmpregado() {
+        TextField salarioField = (TextField) campos.get("salarioField");
+        ComboBox<String> cargoComboBox = (ComboBox<String>) campos.get("cargoComboBox");
+        TextField filialIdField = (TextField) campos.get("filialIdField");
+        DatePicker aniversarioPicker = (DatePicker) campos.get("aniversarioPicker");
+
+        String aniversario = (aniversarioPicker.getValue() == null) ? null : aniversarioPicker.getValue().toString();
+
+        if (criar) {
+            TextField nomeField = (TextField) campos.get("nomeField");
+            TextField cpfField = (TextField) campos.get("cpfField");
+            TextField emailField = (TextField) campos.get("emailField");
+            TextField senhaField = (TextField) campos.get("senhaField");
+            TextField telefoneField = (TextField) campos.get("telefoneField");
+
+            EmpregadoRecordOne empregado = new EmpregadoRecordOne(null, nomeField.getText(), cpfField.getText(), senhaField.getText(),
+                    emailField.getText(), telefoneField.getText(), salarioField.getText(), cargoComboBox.getValue(),filialIdField.getText(),
+                    aniversario, null, null);
+
+            empregadoRepository.postNovoEmpregado(empregado, Integer.parseInt(usuarioLogado.id()), 1);
+        } else {
+            EmpregadoRecordOne oldEmpregado = (EmpregadoRecordOne) object;
+
+            Label idValorLabel = (Label) campos.get("idValorLabel");
+            Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
+            Label cpfValorLabel = (Label) campos.get("cpfValorLabel");
+            Label emailValorLabel = (Label) campos.get("emailValorLabel");
+            Label dataAdimissaoValorLabel = (Label) campos.get("dataAdimissaoValorLabel");
+            Label codEmpregadoValorLabel = (Label) campos.get("codEmpregadoValorLabel");
+            TextField telefoneField = (TextField) campos.get("telefoneField");
+
+            EmpregadoRecordOne empregado = new EmpregadoRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
+                    cpfValorLabel.getText(), oldEmpregado.senha(), emailValorLabel.getText(), telefoneField.getText(),
+                    salarioField.getText(), cargoComboBox.getValue(), filialIdField.getText(), aniversarioPicker.getValue().toString(),
+                    dataAdimissaoValorLabel.getText(), codEmpregadoValorLabel.getText());
+
+            empregadoRepository.putAlterarEmpregado(empregado, Integer.parseInt(usuarioLogado.id()), 1);
+        }
+    }
+
+    private void salvarCliente() {
+        TextField telefoneField = (TextField) campos.get("telefoneField");
+        TextField fullAdressField = (TextField) campos.get("fullAdressField");
+        TextField codCountryField = (TextField) campos.get("codCountryField");
+        TextField codEstadoField = (TextField) campos.get("codEstadoField");
+        TextField codCidadeField = (TextField) campos.get("codCidadeField");
+
+        if (criar) {
+            TextField nomeField = (TextField) campos.get("nomeField");
+            TextField cpfOrCnpjField = (TextField) campos.get("cpfOrCnpjField");
+            TextField emailField = (TextField) campos.get("emailField");
+
+            ClienteRecordOne cliente = new ClienteRecordOne(null, nomeField.getText(), cpfOrCnpjField.getText(), emailField.getText(),
+                    telefoneField.getText(), fullAdressField.getText(), codCountryField.getText(), codEstadoField.getText(),
+                    codCidadeField.getText(), null);
+
+            clienteRepository.postCliente(cliente, Integer.parseInt(usuarioLogado.id()), 1);
+        } else {
+            Label idValorLabel = (Label) campos.get("idValorLabel");
+            Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
+            Label cpfOrCnpjValorLabel = (Label) campos.get("cpfOrCnpjValorLabel");
+            Label emailValorLabel = (Label) campos.get("emailValorLabel");
+            Label codClienteValorLabel = (Label) campos.get("codClienteValorLabel");
+
+            ClienteRecordOne cliente = new ClienteRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
+                    cpfOrCnpjValorLabel.getText(), emailValorLabel.getText(), telefoneField.getText(),
+                    fullAdressField.getText(), codCountryField.getText(), codEstadoField.getText(),
+                    codCidadeField.getText(), codClienteValorLabel.getText());
+
+            clienteRepository.putAlterarCliente(cliente, Integer.parseInt(usuarioLogado.id()), 1);
+        }
+    }
+
+    private void salvarFornecedor() {
+        TextField telefoneField = (TextField) campos.get("telefoneField");
+        TextField fullAdressField = (TextField) campos.get("fullAdressField");
+        TextField codCountryField = (TextField) campos.get("codCountryField");
+        TextField codEstadoField = (TextField) campos.get("codEstadoField");
+        TextField codCidadeField = (TextField) campos.get("codCidadeField");
+
+        if (criar) {
+            TextField nomeField = (TextField) campos.get("nomeField");
+            TextField cpfOrCnpjField = (TextField) campos.get("cpfOrCnpjField");
+            TextField emailField = (TextField) campos.get("emailField");
+
+            FornecedorRecordOne fornecedor = new FornecedorRecordOne(null, nomeField.getText(), cpfOrCnpjField.getText(), emailField.getText(),
+                    telefoneField.getText(), fullAdressField.getText(), codCountryField.getText(), codEstadoField.getText(),
+                    codCidadeField.getText(), null);
+
+            fornecedorRepository.postFornecedor(fornecedor, Integer.parseInt(usuarioLogado.id()), 1);
+        } else {
+            Label idValorLabel = (Label) campos.get("idValorLabel");
+            Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
+            Label cpfOrCnpjValorLabel = (Label) campos.get("cpfOrCnpjValorLabel");
+            Label emailValorLabel = (Label) campos.get("emailValorLabel");
+            Label codFornecedorValorLabel = (Label) campos.get("codFornecedorValorLabel");
+
+            FornecedorRecordOne fornecedor = new FornecedorRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
+                    cpfOrCnpjValorLabel.getText(), emailValorLabel.getText(), telefoneField.getText(),
+                    fullAdressField.getText(), codCountryField.getText(), codEstadoField.getText(),
+                    codCidadeField.getText(), codFornecedorValorLabel.getText());
+
+            fornecedorRepository.putAlterarFornecedor(fornecedor, Integer.parseInt(usuarioLogado.id()), 1);
+        }
+    }
+
     private void salvarEstoque() {
-        Label idValorLabel = (Label) campos.get("idValorLabel");
-        Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
-        Label idFilialValorLabel = (Label) campos.get("idFilialValorLabel");
-        Label idFornecedorValorLabel = (Label) campos.get("idFornecedorValorLabel");
-        Label codItemValorLabel = (Label) campos.get("codItemValorLabel");
         TextField precoField = (TextField) campos.get("precoField");
         TextField quantidadeField = (TextField) campos.get("quantidadeField");
         TextField descricaoField = (TextField) campos.get("descricaoField");
 
-        EstoqueRecordOne estoque = new EstoqueRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
-                idFilialValorLabel.getText(), idFornecedorValorLabel.getText(), precoField.getText(),
-                quantidadeField.getText(), descricaoField.getText(), codItemValorLabel.getText());
+        if (criar) {
+            TextField nomeField = (TextField) campos.get("nomeField");
+            TextField idFilialField = (TextField) campos.get("idFilialField");
+            TextField idFornecedorField = (TextField) campos.get("idFornecedorField");
 
-        estoqueRepository.putAlterarEstoque(estoque, 1);
+            EstoqueRecordOne estoque = new EstoqueRecordOne(null, nomeField.getText(), idFilialField.getText(), idFornecedorField.getText(),
+                    precoField.getText(), quantidadeField.getText(), descricaoField.getText(), null);
+
+            estoqueRepository.postNovoEstoque(estoque, 1);
+        } else {
+            Label idValorLabel = (Label) campos.get("idValorLabel");
+            Label nomeValorLabel = (Label) campos.get("nomeValorLabel");
+            Label idFilialValorLabel = (Label) campos.get("idFilialValorLabel");
+            Label idFornecedorValorLabel = (Label) campos.get("idFornecedorValorLabel");
+            Label codItemValorLabel = (Label) campos.get("codItemValorLabel");
+
+            EstoqueRecordOne estoque = new EstoqueRecordOne(idValorLabel.getText(), nomeValorLabel.getText(),
+                    idFilialValorLabel.getText(), idFornecedorValorLabel.getText(), precoField.getText(),
+                    quantidadeField.getText(), descricaoField.getText(), codItemValorLabel.getText());
+
+            estoqueRepository.putAlterarEstoque(estoque, 1);
+        }
+    }
+
+    private void salvarPagamento() {
+        TextField precoPagoField = (TextField) campos.get("precoPagoField");
+
+        if (criar) {
+            TextField idClienteField = (TextField) campos.get("idClienteField");
+            TextField idFilialField = (TextField) campos.get("idFilialField");
+            TextField precoTotalField = (TextField) campos.get("precoTotalField");
+
+            PagamentoRecordOne pagamento = new PagamentoRecordOne(null, idClienteField.getText(), idFilialField.getText(),
+                    precoTotalField.getText(), precoPagoField.getText(), null, null);
+
+            PagamentoPayloadRecord<PagamentoRecordOne, ItemPagamentoRecordOne> payload = new PagamentoPayloadRecord<>(pagamento, itensPagamento);
+
+            pagamentoRepository.postPagamento(payload, 1);
+        } else {
+            Label idValorLabel = (Label) campos.get("idValorLabel");
+            Label idClienteValorLabel = (Label) campos.get("idClienteValorLabel");
+            Label idFilialValorLabel = (Label) campos.get("idFilialValorLabel");
+            Label precoTotalValorLabel = (Label) campos.get("precoTotalValorLabel");
+            Label dataCompraValorLabel = (Label) campos.get("dataCompraValorLabel");
+            Label codPagamentoValorLabel = (Label) campos.get("codPagamentoValorLabel");
+
+            PagamentoRecordOne pagamento = new PagamentoRecordOne(idValorLabel.getText(), idClienteValorLabel.getText(),
+                    idFilialValorLabel.getText(), precoTotalValorLabel.getText(), precoPagoField.getText(),
+                    dataCompraValorLabel.getText(), codPagamentoValorLabel.getText());
+
+            pagamentoRepository.putPagamento(pagamento, 1);
+        }
+    }
+
+    // funções extras
+    private void carregarListaItensPagamento() {
+        ListView<ItemPagamentoRecordOne> listView = (ListView<ItemPagamentoRecordOne>) campos.get("listView");
+
+        listView.getItems().clear();
+        listView.getItems().addAll(itensPagamento);
     }
 }

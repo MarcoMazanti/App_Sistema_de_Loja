@@ -18,4 +18,8 @@ public record ItemPagamentoRecordOne(String id, String idPagamento, String idIte
         this.quantidade = quantidade;
         this.precoUnit = precoUnit;
     }
+
+    public String toString() {
+        return "Item ID: " + idItem + "- Nome: " + nome + " - Quantidade: " + quantidade + " - Preço Unitário: R$ " + precoUnit;
+    }
 }
