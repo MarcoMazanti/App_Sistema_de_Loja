@@ -4,11 +4,16 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
+import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 import sistemaloja.aplicativo.Entity.Estoque.EstoqueRecordTwo;
 import sistemaloja.aplicativo.Entity.Filial.FilialRecordThree;
@@ -35,8 +40,6 @@ public class HomeController {
 
     @FXML
     public Label nomeHeaderLabel;
-    @FXML
-    public Button novaVendaButton;
     @FXML
     public Label totalVendasLabel;
     @FXML
@@ -98,6 +101,31 @@ public class HomeController {
                 }
             });
         });
+    }
+
+    @FXML
+    public void adicionarVenda(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/EditObjPage.fxml"));
+            Parent root = fxmlLoader.load();
+
+            EditObjController controller = fxmlLoader.getController();
+            controller.setCriar(true);
+            controller.setTipo("Pagamento");
+            controller.setObject(null);
+            controller.setUsuarioLogado(usuarioLogado);
+
+            Scene scene = nomeHeaderLabel.getScene();
+            scene.setRoot(root);
+
+            Stage stage = (Stage) scene.getWindow();
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao trocar de página.\n" + e.getMessage());
+            alerta.show();
+        }
     }
 
     private void carregarDashboardFinanceiro() {

@@ -24,7 +24,7 @@
 
                     <Region HBox.hgrow="ALWAYS"/>
 
-                    <Button text="➕ Adicionar nova Venda" styleClass="btn-primary" fx:id="novaVendaButton" />
+                    <Button text="➕ Adicionar nova Venda" styleClass="btn-primary" onMouseClicked="#adicionarVenda" />
                 </HBox>
 
                 <GridPane hgap="16" vgap="16" styleClass="kpi-grid">

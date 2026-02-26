@@ -88,7 +88,7 @@ public class OptionsController {
             stage.show();
         } catch (Exception e) {
             alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setContentText("Erro ao trocar de página.");
+            alerta.setContentText("Erro ao trocar de página.\n" + e.getMessage());
             alerta.show();
         }
     }

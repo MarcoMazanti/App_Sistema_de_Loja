@@ -1,8 +1,12 @@
 package sistemaloja.aplicativo.Controller;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -11,6 +15,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Cliente.ClienteRecordOne;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
@@ -22,7 +28,10 @@ import sistemaloja.aplicativo.Entity.Pagamento.PagamentoPayloadRecord;
 import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordOne;
 import sistemaloja.aplicativo.Repository.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class EditObjController {
     FilialRepository filialRepository = new FilialRepository();
@@ -174,6 +183,15 @@ public class EditObjController {
         campos.put("codEstadoField", codEstadoField);
         campos.put("codCidadeField", codCidadeField);
 
+        cnpjField.getStyleClass().add("input");
+        quantEmpregadosField.getStyleClass().add("input");
+        telefoneField.getStyleClass().add("input");
+
+        fullAdressField.getStyleClass().add("input");
+        codCountryField.getStyleClass().add("input");
+        codEstadoField.getStyleClass().add("input");
+        codCidadeField.getStyleClass().add("input");
+
         VBox boxCnpj = new VBox(cnpjLabel, cnpjField);
         VBox boxQuantEmpregados = new VBox(quantEmpregadosLabel, quantEmpregadosField);
         VBox boxTelefone = new VBox(telefoneLabel, telefoneField);
@@ -234,6 +252,18 @@ public class EditObjController {
         campos.put("filialIdField", filialIdField);
         campos.put("aniversarioPicker", aniversarioPicker);
 
+        nomeField.getStyleClass().add("input");
+        cpfField.getStyleClass().add("input");
+        emailField.getStyleClass().add("input");
+        senhaField.getStyleClass().add("input");
+        telefoneField.getStyleClass().add("input");
+
+        salarioField.getStyleClass().add("input");
+        cargoComboBox.getStyleClass().add("input");
+        filialIdField.getStyleClass().add("input");
+        aniversarioPicker.getStyleClass().add("input");
+
+
         VBox boxNome = new VBox(nomeLabel, nomeField);
         VBox boxCpf = new VBox(cpfLabel, cpfField);
         VBox boxEmail = new VBox(emailLabel, emailField);
@@ -289,6 +319,16 @@ public class EditObjController {
         campos.put("codEstadoField", codEstadoField);
         campos.put("codCidadeField", codCidadeField);
 
+        nomeField.getStyleClass().add("input");
+        cpfOrCnpjField.getStyleClass().add("input");
+        emailField.getStyleClass().add("input");
+        telefoneField.getStyleClass().add("input");
+
+        fullAdressField.getStyleClass().add("input");
+        codCountryField.getStyleClass().add("input");
+        codEstadoField.getStyleClass().add("input");
+        codCidadeField.getStyleClass().add("input");
+
         VBox boxNome = new VBox(nomeLabel, nomeField);
         VBox boxCpfOrCnpj = new VBox(cpfOrCnpjLabel, cpfOrCnpjField);
         VBox boxEmail = new VBox(emailLabel, emailField);
@@ -336,6 +376,14 @@ public class EditObjController {
         campos.put("quantidadeField", quantidadeField);
         campos.put("descricaoField", descricaoField);
 
+        nomeField.getStyleClass().add("input");
+        idFilialField.getStyleClass().add("input");
+        idFornecedorField.getStyleClass().add("input");
+
+        precoField.getStyleClass().add("input");
+        quantidadeField.getStyleClass().add("input");
+        descricaoField.getStyleClass().add("input");
+
         VBox boxNome = new VBox(nomeLabel, nomeField);
         VBox boxIdFilial = new VBox(idFilialLabel, idFilialField);
         VBox boxIdFornecedor = new VBox(idFornecedorLabel, idFornecedorField);
@@ -359,23 +407,38 @@ public class EditObjController {
         precoTotal.getStyleClass().add("label-title");
         precoPago.getStyleClass().add("label-title");
 
-        TextField idClienteField = new TextField();
-        TextField idFilialField = new TextField();
-        TextField precoTotalField = new TextField();
+        Label precoTotalValorLabel = new Label("R$ 0.00");
+
+        List<ClienteRecordOne> listaCliente = (List<ClienteRecordOne>) clienteRepository.getAllClientes(1);
+        List<String> listaIdCliente = listaCliente.stream().map(ClienteRecordOne::id).toList();
+
+        List<FilialRecordOne> listaFilial = (List<FilialRecordOne>) filialRepository.getAllFiliais(1);
+        List<String> listaIdFilial = listaFilial.stream().map(FilialRecordOne::id).toList();
+
+        ComboBox<String> idClienteField = new ComboBox<>();
+        ComboBox<String> idFilialField = new ComboBox<>();
         TextField precoPagoField = new TextField();
+
+        idClienteField.getItems().addAll(listaIdCliente);
+        idFilialField.getItems().addAll(listaIdFilial);
 
         campos.put("idClienteField", idClienteField);
         campos.put("idFilialField", idFilialField);
-        campos.put("precoTotalField", precoTotalField);
+        campos.put("precoTotalValorLabel", precoTotalValorLabel);
         campos.put("precoPagoField", precoPagoField);
+
+        idClienteField.getStyleClass().add("input");
+        idFilialField.getStyleClass().add("input");
+        precoPagoField.getStyleClass().add("input");
 
         VBox boxIdCliente = new VBox(idClienteLabel, idClienteField);
         VBox boxIdFilial = new VBox(idFilialLabel, idFilialField);
-        VBox boxPrecoTotal = new VBox(precoTotal, precoTotalField);
+        VBox boxPrecoTotal = new VBox(precoTotal, precoTotalValorLabel);
         VBox boxPrecoPago = new VBox(precoPago, precoPagoField);
 
         boxImutavel.getChildren().addAll(boxIdCliente, boxIdFilial, boxPrecoTotal, boxPrecoPago);
 
+        // Lado do Objeto de ItemPagamento
         Label idItemLabel = new Label("Item ID: ");
         Label nomeLabel = new Label("Nome do Item: ");
         Label quantidadeLabel = new Label("Quantidade: ");
@@ -386,40 +449,69 @@ public class EditObjController {
         quantidadeLabel.getStyleClass().add("label-title");
         precoUnitLabel.getStyleClass().add("label-title");
 
-        TextField idItemField = new TextField();
-        TextField nomeItemField = new TextField();
+        List<EstoqueRecordOne> estoque = (List<EstoqueRecordOne>) estoqueRepository.getAllEstoqueByIdFilial(Integer.parseInt(usuarioLogado.filialId()), 1);
+        List<String> listIdEstoque = estoque.stream().map(EstoqueRecordOne::id).toList();
+
+        ComboBox<String> idItemField = new ComboBox<>();
+
+        Label nomeItemValorLabel = new Label();
+        Label precoUnitItemValorLabel = new Label();
+
         TextField quantidadeItemField = new TextField();
-        TextField precoUnitItemField = new TextField();
+
+        idItemField.getItems().addAll(listIdEstoque);
+
+        idItemField.setOnAction(event -> {
+            String idItem = idItemField.getValue();
+
+            EstoqueRecordOne item = estoque.stream().filter(estoqueRecordOne -> estoqueRecordOne.id().equals(idItem)).findFirst().orElse(null);
+            if (item != null) {
+                nomeItemValorLabel.setText(item.nome());
+                precoUnitItemValorLabel.setText(String.valueOf(item.preco()));
+            } else {
+                nomeItemValorLabel.setText("");
+                precoUnitItemValorLabel.setText("");
+            }
+        });
 
         campos.put("idItemField", idItemField);
-        campos.put("nomeItemField", nomeItemField);
+        campos.put("nomeItemValorLabel", nomeItemValorLabel);
         campos.put("quantidadeItemField", quantidadeItemField);
-        campos.put("precoUnitItemField", precoUnitItemField);
+        campos.put("precoUnitItemValorLabel", precoUnitItemValorLabel);
+
+        idItemField.getStyleClass().add("input");
+        quantidadeItemField.getStyleClass().add("input");
 
         VBox boxIdItem = new VBox(idItemLabel, idItemField);
-        VBox boxNomeItem = new VBox(nomeLabel, nomeItemField);
+        VBox boxNomeItem = new VBox(nomeLabel, nomeItemValorLabel);
         VBox boxQuantidadeItem = new VBox(quantidadeLabel, quantidadeItemField);
-        VBox boxPrecoUnitItem = new VBox(precoUnitLabel, precoUnitItemField);
+        VBox boxPrecoUnitItem = new VBox(precoUnitLabel, precoUnitItemValorLabel);
 
         boxMutavel.getChildren().addAll(boxIdItem, boxNomeItem, boxQuantidadeItem, boxPrecoUnitItem);
 
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("@../Images/add.png")));
-        ImageView imageView = new ImageView(image);
-        imageView.setFitHeight(40);
-        imageView.setFitWidth(40);
+        // Adição do ícone de Adição
+        Image imageAdd = new Image(
+                Objects.requireNonNull(
+                        getClass().getResource("/sistemaloja/aplicativo/Images/add.png")
+                ).toExternalForm()
+        );
+        ImageView imageViewAdd = new ImageView(imageAdd);
+        imageViewAdd.setFitHeight(35);
+        imageViewAdd.setFitWidth(35);
 
-        imageView.setOnMouseClicked(event -> {
-            TextField idItem = (TextField) campos.get("idItemField");
-            TextField nomeItem = (TextField) campos.get("nomeItemField");
+        // Adiciona o Item para Compra
+        imageViewAdd.setOnMouseClicked(event -> {
+            ComboBox<String> idItem = (ComboBox<String>) campos.get("idItemField");
             TextField quantidadeItem = (TextField) campos.get("quantidadeItemField");
-            TextField precoUnitItem = (TextField) campos.get("precoUnitItemField");
 
-            itensPagamento.add(new ItemPagamentoRecordOne(null, null, idItem.getText(),
-                    nomeItem.getText(), quantidadeItem.getText(), precoUnitItem.getText()));
+            EstoqueRecordOne item = estoque.stream().filter(estoqueRecordOne -> estoqueRecordOne.id().equals(idItem.getValue())).findFirst().orElse(null);
+
+            itensPagamento.add(new ItemPagamentoRecordOne(null, null, item.id(), item.nome(), quantidadeItem.getText(), item.preco()));
             carregarListaItensPagamento();
         });
+        imageViewAdd.setStyle("-fx-cursor: hand;");
 
-        mainBox.getChildren().addLast(imageView);
+        mainBox.getChildren().addLast(imageViewAdd);
 
         Separator separator = new Separator();
         separator.setOrientation(Orientation.VERTICAL);
@@ -429,6 +521,31 @@ public class EditObjController {
         ListView<ItemPagamentoRecordOne> listView = new ListView<>();
         campos.put("listView", listView);
         mainBox.getChildren().addLast(listView);
+
+        // Adição e Configuração do ícone de deleção
+        Image imageDelete = new Image(
+                Objects.requireNonNull(
+                        getClass().getResource("/sistemaloja/aplicativo/Images/delete.png")
+                ).toExternalForm()
+        );
+        ImageView imageViewDelete = new ImageView(imageDelete);
+        imageViewDelete.setFitHeight(35);
+        imageViewDelete.setFitWidth(35);
+        imageViewDelete.setStyle("-fx-cursor: hand;");
+
+        VBox boxDelete = new VBox(imageViewDelete);
+        boxDelete.setAlignment(Pos.CENTER);
+
+        // Delete um item do Carrinho
+        boxDelete.setOnMouseClicked(event -> {
+            ItemPagamentoRecordOne item = listView.getSelectionModel().getSelectedItem();
+            if (item != null) {
+                itensPagamento.remove(item);
+                carregarListaItensPagamento();
+            }
+        });
+
+        mainBox.getChildren().addLast(boxDelete);
     }
 
     // Editar Obj
@@ -476,6 +593,12 @@ public class EditObjController {
         campos.put("codCountryField", codCountryField);
         campos.put("codEstadoField", codEstadoField);
         campos.put("codCidadeField", codCidadeField);
+
+        telefoneField.getStyleClass().add("input");
+        fullAdressField.getStyleClass().add("input");
+        codCountryField.getStyleClass().add("input");
+        codEstadoField.getStyleClass().add("input");
+        codCidadeField.getStyleClass().add("input");
 
         VBox boxId = new VBox(idLabel, idValorLabel);
         VBox boxCnpj = new VBox(cnpjLabel, cnpjValorLabel);
@@ -540,12 +663,25 @@ public class EditObjController {
         DatePicker aniversarioPicker = new DatePicker();
 
         cargoComboBox.getItems().addAll("DONO", "GERENTE", "EMPREGADO");
+        cargoComboBox.setValue(empregado.cargo());
+
+        if (usuarioLogado.aniversario() != null) {
+            DateTimeFormatter formatador = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.getDefault());
+            LocalDate aniversario = LocalDate.parse(empregado.aniversario(), formatador);
+            aniversarioPicker.setValue(aniversario);
+        }
 
         campos.put("telefoneField", telefoneField);
         campos.put("salarioField", salarioField);
         campos.put("cargoComboBox", cargoComboBox);
         campos.put("filialIdField", filialIdField);
         campos.put("aniversarioPicker", aniversarioPicker);
+
+        telefoneField.getStyleClass().add("input");
+        salarioField.getStyleClass().add("input");
+        cargoComboBox.getStyleClass().add("input");
+        filialIdField.getStyleClass().add("input");
+        aniversarioPicker.getStyleClass().add("input");
 
         VBox boxId = new VBox(idLabel, idValorLabel);
         VBox boxNome = new VBox(nomeLabel, nomeValorLabel);
@@ -612,6 +748,12 @@ public class EditObjController {
         campos.put("codEstadoField", codEstadoField);
         campos.put("codCidadeField", codCidadeField);
 
+        telefoneField.getStyleClass().add("input");
+        fullAdressField.getStyleClass().add("input");
+        codCountryField.getStyleClass().add("input");
+        codEstadoField.getStyleClass().add("input");
+        codCidadeField.getStyleClass().add("input");
+
         VBox boxId = new VBox(idLabel, idValorLabel);
         VBox boxNome = new VBox(nomeLabel, nomeValorLabel);
         VBox boxCpfOrCnpj = new VBox(cpfOrCnpjLabel, cpfOrCnpjValorLabel);
@@ -676,6 +818,12 @@ public class EditObjController {
         campos.put("codEstadoField", codEstadoField);
         campos.put("codCidadeField", codCidadeField);
 
+        telefoneField.getStyleClass().add("input");
+        fullAdressField.getStyleClass().add("input");
+        codCountryField.getStyleClass().add("input");
+        codEstadoField.getStyleClass().add("input");
+        codCidadeField.getStyleClass().add("input");
+
         VBox boxId = new VBox(idLabel, idValorLabel);
         VBox boxNome = new VBox(nomeLabel, nomeValorLabel);
         VBox boxCpfOrCnpj = new VBox(cpfOrCnpjLabel, cpfOrCnpjValorLabel);
@@ -732,6 +880,10 @@ public class EditObjController {
         campos.put("quantidadeField", quantidadeField);
         campos.put("descricaoField", descricaoField);
 
+        precoField.getStyleClass().add("input");
+        quantidadeField.getStyleClass().add("input");
+        descricaoField.getStyleClass().add("input");
+
         VBox boxId = new VBox(idLabel, idValorLabel);
         VBox boxNome = new VBox(nomeLabel, nomeValorLabel);
         VBox boxIdFilial = new VBox(idFilialLabel, idFilialValorLabel);
@@ -781,6 +933,8 @@ public class EditObjController {
         campos.put("codPagamentoValorLabel", codPagamentoValorLabel);
 
         campos.put("precoPagoField", precoPagoField);
+
+        precoPagoField.getStyleClass().add("input");
 
         VBox boxId = new VBox(idLabel, idValorLabel);
         VBox boxIdCliente = new VBox(idClienteLabel, idClienteValorLabel);
@@ -964,12 +1118,12 @@ public class EditObjController {
         TextField precoPagoField = (TextField) campos.get("precoPagoField");
 
         if (criar) {
-            TextField idClienteField = (TextField) campos.get("idClienteField");
-            TextField idFilialField = (TextField) campos.get("idFilialField");
-            TextField precoTotalField = (TextField) campos.get("precoTotalField");
+            ComboBox<String> idClienteField = (ComboBox<String>) campos.get("idClienteField");
+            ComboBox<String> idFilialField = (ComboBox<String>) campos.get("idFilialField");
+            Label precoTotalValorLabel = (Label) campos.get("precoTotalValorLabel");
 
-            PagamentoRecordOne pagamento = new PagamentoRecordOne(null, idClienteField.getText(), idFilialField.getText(),
-                    precoTotalField.getText(), precoPagoField.getText(), null, null);
+            PagamentoRecordOne pagamento = new PagamentoRecordOne(null, idClienteField.getValue(), idFilialField.getValue(),
+                    precoTotalValorLabel.getText(), precoPagoField.getText(), null, null);
 
             PagamentoPayloadRecord<PagamentoRecordOne, ItemPagamentoRecordOne> payload = new PagamentoPayloadRecord<>(pagamento, itensPagamento);
 
@@ -993,8 +1147,39 @@ public class EditObjController {
     // funções extras
     private void carregarListaItensPagamento() {
         ListView<ItemPagamentoRecordOne> listView = (ListView<ItemPagamentoRecordOne>) campos.get("listView");
+        Label precoTotalValorLabel = (Label) campos.get("precoTotalValorLabel");
 
-        listView.getItems().clear();
-        listView.getItems().addAll(itensPagamento);
+        ObservableList<ItemPagamentoRecordOne> obsList = FXCollections.observableArrayList();
+        obsList.addAll(itensPagamento);
+
+        listView.setItems(obsList);
+
+        listView.setCellFactory(lv -> new ListCell<ItemPagamentoRecordOne>() {
+            @Override
+            protected void updateItem(ItemPagamentoRecordOne item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    TextFlow flow = new TextFlow();
+                    Text textoComum = new Text(item.toString());
+                    textoComum.setStyle("-fx-wrap-text: true; -fx-fill: white;");
+
+                    flow.getChildren().add(textoComum);
+                    flow.maxWidthProperty().bind(lv.widthProperty().subtract(40));
+
+                    setGraphic(flow);
+                    setText(null);
+                }
+            }
+        });
+
+        double precoTotal = 0;
+        for (ItemPagamentoRecordOne item : itensPagamento) {
+            precoTotal += Double.parseDouble(item.precoUnit()) * Double.parseDouble(item.quantidade());
+        }
+
+        precoTotalValorLabel.setText(String.format("R$ %.2f", precoTotal));
     }
 }

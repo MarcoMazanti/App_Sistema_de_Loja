@@ -20,6 +20,6 @@ public record ItemPagamentoRecordOne(String id, String idPagamento, String idIte
     }
 
     public String toString() {
-        return "Item ID: " + idItem + "- Nome: " + nome + " - Quantidade: " + quantidade + " - Preço Unitário: R$ " + precoUnit;
+        return "Item ID: " + idItem + " - Nome: " + nome + " - Quantidade: " + quantidade + " - Preço Unitário: R$ " + precoUnit;
     }
 }
