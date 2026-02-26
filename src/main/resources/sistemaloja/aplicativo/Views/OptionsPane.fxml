@@ -47,8 +47,8 @@
                 </GridPane>
 
                 <HBox spacing="15" styleClass="toolbar-card">
-                    <TextField promptText="Pesquise pelo Nome ou pelo Código..." HBox.hgrow="ALWAYS" styleClass="search-field"/>
-                    <Button text="Pesquisar" styleClass="btn-primary" />
+                    <TextField promptText="Pesquise pelo Nome ou pelo Código..." HBox.hgrow="ALWAYS" styleClass="search-field" fx:id="textoPesquisa"/>
+                    <Button text="Pesquisar" styleClass="btn-primary" onMouseClicked="#pesquisar" />
                 </HBox>
 
                 <VBox styleClass="stat-card">
