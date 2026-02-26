@@ -158,7 +158,7 @@ public class FilialRepository {
         }
     }
 
-    public Boolean deleteFilial(int id, int idRequerinte, int modelRecord) {
+    public Boolean deleteFilial(int idRequerinte, int id, int modelRecord) {
         try {
             SecretKey secretKey = gerarSecretKey();
 

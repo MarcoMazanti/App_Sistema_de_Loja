@@ -1,8 +1,14 @@
 package sistemaloja.aplicativo.Controller;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import sistemaloja.aplicativo.Entity.Empregado.EmpregadoRecordOne;
 
 import java.time.LocalDate;
@@ -44,6 +50,31 @@ public class UserController {
         barraLateralController.setUsuarioLogado(usuarioLogado);
 
         carregarDadosPagina();
+    }
+
+    @FXML
+    public void editarPerfil(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/EditObjPage.fxml"));
+            Parent root = fxmlLoader.load();
+
+            EditObjController controller = fxmlLoader.getController();
+            controller.setTipo("Empregado");
+            controller.setObject(usuarioLogado);
+            controller.setUsuarioLogado(usuarioLogado);
+            controller.setCriar(false);
+
+            Scene scene = cargoCentralLabel.getScene();
+            scene.setRoot(root);
+
+            Stage stage = (Stage) scene.getWindow();
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao trocar de página.");
+            alerta.show();
+        }
     }
 
     private void carregarDadosPagina() {

@@ -81,6 +81,10 @@
     -fx-background-radius: 8;
 }
 
+.btn-primary:hover {
+    -fx-cursor: hand;
+}
+
 .stat-card {
     -fx-background-color: #1a202c;
     -fx-padding: 20;

@@ -3,7 +3,7 @@
 ### Objetivos Primários
 - [X] Aprimorar o conhecimento em JavaFX
 - [X] Compreender criptografía híbrida
-- [ ] Aprimoramento da documentação
+- [X] Aprimoramento da documentação
 
 - - -
 
@@ -27,4 +27,4 @@
 #### 2026-01-28
 
 ## Data de Término
-#### Em Desenvolvimento
+#### 2026-02-26

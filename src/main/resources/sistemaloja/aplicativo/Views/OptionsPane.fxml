@@ -3,6 +3,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="sistemaloja.aplicativo.Controller.OptionsController"
             stylesheets="@../CSS/Options.css" styleClass="root">
@@ -19,7 +21,7 @@
                         <Label text="Gerenciamento" styleClass="page-title" fx:id="tituloPaginaLabel" />
                     </VBox>
                     <HBox spacing="10">
-                        <Button text="Adicionar Novo Item" styleClass="btn-primary"/>
+                        <Button text="Adicionar Novo Item" styleClass="btn-primary" onMouseClicked="#adicionarObj"/>
                     </HBox>
                 </HBox>
 
@@ -45,12 +47,26 @@
                 </GridPane>
 
                 <HBox spacing="15" styleClass="toolbar-card">
-                    <TextField promptText="Pesquise pelo Nome ou pelo Código..." HBox.hgrow="ALWAYS" styleClass="search-field"/>
-                    <Button text="Pesquisar" styleClass="btn-primary" />
+                    <TextField promptText="Pesquise pelo Nome ou pelo Código..." HBox.hgrow="ALWAYS" styleClass="search-field" fx:id="textoPesquisa"/>
+                    <Button text="Pesquisar" styleClass="btn-primary" onMouseClicked="#pesquisar" />
                 </HBox>
 
                 <VBox styleClass="stat-card">
-                    <ListView maxWidth="Infinity" fx:id="listaObjetos" /> <!-- Será preenchido pelo Controller -->
+                    <HBox spacing="20">
+                        <ListView maxWidth="Infinity" fx:id="listaObjetos" HBox.hgrow="ALWAYS" /> <!-- Será preenchido pelo Controller -->
+                        <VBox alignment="CENTER" spacing="15">
+                            <HBox onMouseClicked="#editarObj" style="-fx-cursor: hand;">
+                                <ImageView fitWidth="35" fitHeight="35" fx:id="boxEdit">
+                                    <Image url="@../Images/edit.png" />
+                                </ImageView>
+                            </HBox>
+                            <HBox onMouseClicked="#deletarObj" style="-fx-cursor: hand;">
+                                <ImageView fitWidth="35" fitHeight="35" fx:id="boxDelete">
+                                    <Image url="@../Images/delete.png" />
+                                </ImageView>
+                            </HBox>
+                        </VBox>
+                    </HBox>
                 </VBox>
             </VBox>
         </ScrollPane>

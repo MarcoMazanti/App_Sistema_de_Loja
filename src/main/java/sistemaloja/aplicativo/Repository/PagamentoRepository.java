@@ -345,4 +345,41 @@ public class PagamentoRepository {
             return null;
         }
     }
+
+    public Object putPagamento(PagamentoRecordOne pagamentoRecordOne, int modelRecord) {
+        try {
+            SecretKey secretKey = gerarSecretKey();
+            PagamentoFactory pagamentoFactory = new PagamentoFactory(secretKey);
+
+            String json = mapper.writeValueAsString(pagamentoFactory.criptPagamento(pagamentoRecordOne));
+
+            HttpClient client = HttpClient.newHttpClient();
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(URL))
+                    .header("Content-Type", "application/json")
+                    .header("ModelRecord", String.valueOf(modelRecord))
+                    .header("secretKey", criptSecretKey(secretKey))
+                    .PUT(HttpRequest.BodyPublishers.ofString(json))
+                    .build();
+
+            HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() == 200) {
+                Object pagamento = mapper.readValue(response.body().toString(), pagamentoFactory.retornaClasse(response.body()));
+
+                if (pagamento == null) return null;
+
+                return pagamentoFactory.decriptPagamento(pagamento);
+            } else {
+                alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setContentText(response.body().toString());
+                alerta.show();
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 }

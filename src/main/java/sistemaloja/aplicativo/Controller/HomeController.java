@@ -41,8 +41,6 @@ public class HomeController {
     @FXML
     public Label nomeHeaderLabel;
     @FXML
-    public Button novaVendaButton;
-    @FXML
     public Label totalVendasLabel;
     @FXML
     public Label totalEmpregadoLabel;
@@ -103,6 +101,31 @@ public class HomeController {
                 }
             });
         });
+    }
+
+    @FXML
+    public void adicionarVenda(MouseEvent mouseEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/sistemaloja/aplicativo/Views/EditObjPage.fxml"));
+            Parent root = fxmlLoader.load();
+
+            EditObjController controller = fxmlLoader.getController();
+            controller.setCriar(true);
+            controller.setTipo("Pagamento");
+            controller.setObject(null);
+            controller.setUsuarioLogado(usuarioLogado);
+
+            Scene scene = nomeHeaderLabel.getScene();
+            scene.setRoot(root);
+
+            Stage stage = (Stage) scene.getWindow();
+            stage.setMaximized(true);
+            stage.show();
+        } catch (Exception e) {
+            alerta = new Alert(Alert.AlertType.ERROR);
+            alerta.setContentText("Erro ao trocar de página.\n" + e.getMessage());
+            alerta.show();
+        }
     }
 
     private void carregarDashboardFinanceiro() {

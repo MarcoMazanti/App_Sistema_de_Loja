@@ -41,7 +41,7 @@
                         <Region HBox.hgrow="ALWAYS"/>
 
                         <HBox spacing="12">
-                            <Button text="Editar Perfil" styleClass="btn-primary"/>
+                            <Button text="Editar Perfil" styleClass="btn-primary" onMouseClicked="#editarPerfil"/>
                         </HBox>
                     </HBox>
 
