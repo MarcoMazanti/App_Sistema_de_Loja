@@ -60,8 +60,6 @@ public class OptionsController {
     @FXML
     public Label boxThreeValueLabel;
     @FXML
-    public TextField textoPesquisa;
-    @FXML
     public ListView<Object> listaObjetos;
     @FXML
     public ImageView boxEdit;
@@ -165,20 +163,6 @@ public class OptionsController {
         } else {
             alerta = new Alert(Alert.AlertType.ERROR, "Selecione um objeto para deletar.", ButtonType.OK);
             alerta.showAndWait();
-        }
-    }
-
-    @FXML
-    public void pesquisar(MouseEvent mouseEvent) {
-        if (!textoPesquisa.getText().isEmpty()) {
-            listaObjetos.getItems().forEach(item -> {
-                String itemText = item.toString();
-                if (itemText.toLowerCase().contains(textoPesquisa.getText().toLowerCase())) {
-                    listaObjetos.getSelectionModel().select(item);
-                }
-            });
-        } else {
-            mostrarObjectList();
         }
     }
 

@@ -1122,6 +1122,9 @@ public class EditObjController {
             ComboBox<String> idFilialField = (ComboBox<String>) campos.get("idFilialField");
             Label precoTotalValorLabel = (Label) campos.get("precoTotalValorLabel");
 
+            String precoTotal = precoTotalValorLabel.getText().replace("R$ ", "").replace(",", ".");
+            double precoPago = Double.parseDouble(precoPagoField.getText().replace("R$ ", "").replace(",", "."));
+
             PagamentoRecordOne pagamento = new PagamentoRecordOne(null, idClienteField.getValue(), idFilialField.getValue(),
                     precoTotalValorLabel.getText(), precoPagoField.getText(), null, null);
 
