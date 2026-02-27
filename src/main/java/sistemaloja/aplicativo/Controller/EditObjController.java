@@ -1117,6 +1117,8 @@ public class EditObjController {
 
     private void salvarPagamento() {
         TextField precoPagoField = (TextField) campos.get("precoPagoField");
+        double precoPago = Double.parseDouble(precoPagoField.getText().replace("R$ ", ""));
+        BigDecimal precoPagoBigDecimal = new BigDecimal(precoPago);
 
         if (criar) {
             ComboBox<String> idClienteField = (ComboBox<String>) campos.get("idClienteField");
@@ -1124,8 +1126,6 @@ public class EditObjController {
             Label precoTotalValorLabel = (Label) campos.get("precoTotalValorLabel");
 
             String precoTotal = precoTotalValorLabel.getText().replace("R$ ", "").replace(",", ".");
-            double precoPago = Double.parseDouble(precoPagoField.getText().replace("R$ ", ""));
-            BigDecimal precoPagoBigDecimal = new BigDecimal(precoPago);
 
             PagamentoRecordOne pagamento = new PagamentoRecordOne(null, idClienteField.getValue(), idFilialField.getValue(),
             precoTotal, precoPagoBigDecimal.toString(), null, null);
@@ -1141,8 +1141,10 @@ public class EditObjController {
             Label dataCompraValorLabel = (Label) campos.get("dataCompraValorLabel");
             Label codPagamentoValorLabel = (Label) campos.get("codPagamentoValorLabel");
 
+            String precoTotal = precoTotalValorLabel.getText().replace("R$ ", "").replace(",", ".");
+
             PagamentoRecordOne pagamento = new PagamentoRecordOne(idValorLabel.getText(), idClienteValorLabel.getText(),
-                    idFilialValorLabel.getText(), precoTotalValorLabel.getText(), precoPagoField.getText(),
+                    idFilialValorLabel.getText(), precoTotal, precoPagoBigDecimal.toString(),
                     dataCompraValorLabel.getText(), codPagamentoValorLabel.getText());
 
             pagamentoRepository.putPagamento(pagamento, 1);

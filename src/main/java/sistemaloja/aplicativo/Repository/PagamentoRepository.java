@@ -182,6 +182,7 @@ public class PagamentoRepository {
             HttpResponse response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             if (response.statusCode() == 200) {
+                if (response.body().toString().equals("[]")) return null;
                 List<Object> pagamentoList = mapper.readValue(response.body().toString(),
                         mapper.getTypeFactory().constructCollectionType(List.class, pagamentoFactory.retornaClasse(response.body().toString())));
 
