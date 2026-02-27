@@ -19,10 +19,7 @@ import sistemaloja.aplicativo.Entity.Estoque.EstoqueRecordTwo;
 import sistemaloja.aplicativo.Entity.Filial.FilialRecordThree;
 import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordOne;
 import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordTwo;
-import sistemaloja.aplicativo.Repository.ClienteRepository;
-import sistemaloja.aplicativo.Repository.EstoqueRepository;
-import sistemaloja.aplicativo.Repository.FilialRepository;
-import sistemaloja.aplicativo.Repository.PagamentoRepository;
+import sistemaloja.aplicativo.Repository.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -34,6 +31,7 @@ public class HomeController {
     ClienteRepository clienteRepository = new ClienteRepository();
     FilialRepository filialRepository = new FilialRepository();
     EstoqueRepository estoqueRepository = new EstoqueRepository();
+    EmpregadoRepository empregadoRepository = new EmpregadoRepository();
 
     private EmpregadoRecordOne usuarioLogado;
     private Alert alerta;
@@ -63,8 +61,8 @@ public class HomeController {
 
         carregarTabelaPagamentosRecentes(lista -> {
             ObservableList<String> obsList = FXCollections.observableArrayList();
-            DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter parser = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
             lista.forEach(p -> {
                 LocalDateTime dataReal = LocalDateTime.parse(p.dataCompra(), parser);
@@ -141,8 +139,7 @@ public class HomeController {
                 List<?> clientes = clienteRepository.getAllClientes(3);
 
                 int quantEmpregados = (usuarioLogado.cargo().equals("DONO"))
-                        ? (int) filialRepository.getAllFiliais(3).stream()
-                        .mapToDouble(item -> Double.parseDouble(((FilialRecordThree) item).quantEmpregados())).sum()
+                        ? empregadoRepository.getAllEmpregados(3).size()
                         : Integer.parseInt(((FilialRecordThree) filialRepository.getFilialById(Integer.parseInt(usuarioLogado.filialId()), 3)).quantEmpregados());
 
                 String[] nomes = usuarioLogado.nome().split(" ");
@@ -170,7 +167,7 @@ public class HomeController {
                     ? (List<PagamentoRecordOne>) lista
                     : List.of();
 
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss[.SSS][.SS][.S]");
             LocalDateTime limite = LocalDateTime.now().minusDays(7);
 
             List<PagamentoRecordOne> listaFinal = pagamentosList.stream().filter(item -> {
