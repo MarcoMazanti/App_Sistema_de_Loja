@@ -28,6 +28,7 @@ import sistemaloja.aplicativo.Entity.Pagamento.PagamentoPayloadRecord;
 import sistemaloja.aplicativo.Entity.Pagamento.PagamentoRecordOne;
 import sistemaloja.aplicativo.Repository.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -1123,10 +1124,11 @@ public class EditObjController {
             Label precoTotalValorLabel = (Label) campos.get("precoTotalValorLabel");
 
             String precoTotal = precoTotalValorLabel.getText().replace("R$ ", "").replace(",", ".");
-            double precoPago = Double.parseDouble(precoPagoField.getText().replace("R$ ", "").replace(",", "."));
+            double precoPago = Double.parseDouble(precoPagoField.getText().replace("R$ ", ""));
+            BigDecimal precoPagoBigDecimal = new BigDecimal(precoPago);
 
             PagamentoRecordOne pagamento = new PagamentoRecordOne(null, idClienteField.getValue(), idFilialField.getValue(),
-                    precoTotalValorLabel.getText(), precoPagoField.getText(), null, null);
+            precoTotal, precoPagoBigDecimal.toString(), null, null);
 
             PagamentoPayloadRecord<PagamentoRecordOne, ItemPagamentoRecordOne> payload = new PagamentoPayloadRecord<>(pagamento, itensPagamento);
 
